@@ -1,7 +1,8 @@
+
 Themeswitcher_XH – a CMSimple_XH plugin
 =======================================
 
-[![rc: 1.0beta2](https://img.shields.io/badge/beta-1.0beta2-red.svg)](https://github.com/cmb69/themeswitcher_xh/releases/tag/1.0beta2)
+[![beta: 1.0beta3](https://img.shields.io/badge/beta-1.0beta3-red.svg)](https://github.com/cmb69/themeswitcher_xh/releases/tag/1.0beta3)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 Copyright (c) 2014 - 2017 Christoph M. Becker
