@@ -21,10 +21,7 @@
 
 namespace Themeswitcher;
 
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Extensions_MockFunction;
-
-class ControllerTest extends PHPUnit_Framework_TestCase
+class ControllerTest extends TestCase
 {
     /**
      * @var Controller
@@ -42,7 +39,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
     private $infoCommand;
 
     /**
-     * @var PHPUnit_Extensions_MockFunction
+     * @var FunctionMock
      */
     private $printPluginAdmin;
 
@@ -51,11 +48,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        if (!defined('XH_ADM')) {
-            define('XH_ADM', true);
-        } else {
-            runkit_constant_redefine('XH_ADM', true);
-        }
+        $this->setConstant('XH_ADM', true);
         $commandFactory = $this->createMock('Themeswitcher\CommandFactory');
         $this->themeSelectionCommand = $this->createMock('Themeswitcher\ThemeSelectionCommand');
         $commandFactory->expects($this->any())
@@ -69,8 +62,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase
         $commandFactory->expects($this->any())->method('makeInfoCommand')
             ->will($this->returnValue($this->infoCommand));
         $this->subject = new Controller($commandFactory);
-        $this->printPluginAdmin = new PHPUnit_Extensions_MockFunction('print_plugin_admin', $this->subject);
-        new PHPUnit_Extensions_MockFunction('XH_registerStandardPluginMenuItems', $this->subject);
+        $this->printPluginAdmin = $this->createFunctionMock('print_plugin_admin');
+        $this->createFunctionMock('XH_registerStandardPluginMenuItems');
     }
 
     /**
@@ -118,7 +111,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
         $admin = 'plugin_config';
         $action = 'plugin_edit';
         $this->printPluginAdmin->expects($this->once());
-        $pluginAdminCommon = new PHPUnit_Extensions_MockFunction('plugin_admin_common', $this->subject);
+        $pluginAdminCommon = $this->createFunctionMock('plugin_admin_common');
         $pluginAdminCommon->expects($this->once())->with($action, $admin, 'themeswitcher');
         $this->subject->dispatch();
     }

@@ -21,10 +21,7 @@
 
 namespace Themeswitcher;
 
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Extensions_MockFunction;
-
-class SelectThemeCommandTest extends PHPUnit_Framework_TestCase
+class SelectThemeCommandTest extends TestCase
 {
     /**
      * @var SelectThemeCommand
@@ -37,7 +34,7 @@ class SelectThemeCommandTest extends PHPUnit_Framework_TestCase
     private $model;
 
     /**
-     * @var PHPUnit_Extensions_MockFunction
+     * @var FunctionMock
      */
     private $setcookie;
 
@@ -53,7 +50,7 @@ class SelectThemeCommandTest extends PHPUnit_Framework_TestCase
         $this->model->expects($this->any())->method('getThemes')
             ->will($this->returnValue(array('one', 'three', 'two')));
         $this->subject = new SelectThemeCommand($this->model);
-        $this->setcookie = new PHPUnit_Extensions_MockFunction('setcookie', $this->subject);
+        $this->setcookie = $this->createFunctionMock('setcookie');
     }
 
     /**
