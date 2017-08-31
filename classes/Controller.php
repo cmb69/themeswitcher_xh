@@ -75,9 +75,18 @@ class Controller
      */
     private function outputContents($html)
     {
-        global $o;
+        global $c, $o, $pd_s, $s, $edit, $xh_publisher, $_XH_firstPublishedPage;
 
-        $o .= $html;
+        if (isset($xh_publisher)) {
+            $startPage = $xh_publisher->getFirstPublishedPage();
+        } else {
+            $startPage = $_XH_firstPublishedPage;
+        }
+        if ($pd_s === $startPage && $s !== $startPage && !(XH_ADM && $edit)) {
+            $c[$pd_s] = $html . $c[$pd_s];
+        } else {
+            $o .= $html;
+        }
     }
 
     /**
