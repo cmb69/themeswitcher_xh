@@ -24,7 +24,7 @@ namespace Themeswitcher;
 class ControllerTest extends TestCase
 {
     /**
-     * @var Controller
+     * @var Plugin
      */
     private $subject;
 
@@ -61,7 +61,7 @@ class ControllerTest extends TestCase
         $this->infoCommand = $this->createMock('Themeswitcher\InfoCommand');
         $commandFactory->expects($this->any())->method('makeInfoCommand')
             ->will($this->returnValue($this->infoCommand));
-        $this->subject = new Controller($commandFactory);
+        $this->subject = new Plugin($commandFactory);
         $this->printPluginAdmin = $this->createFunctionMock('print_plugin_admin');
         $this->createFunctionMock('XH_registerStandardPluginMenuItems');
     }

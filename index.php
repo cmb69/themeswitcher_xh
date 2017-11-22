@@ -35,9 +35,9 @@ function themeswitcher()
 }
 
 /**
- * @var Themeswitcher\Controller
+ * @var Themeswitcher\Plugin
  */
-$_Themeswitcher_controller = new Themeswitcher\Controller(
+$_Themeswitcher_controller = new Themeswitcher\Plugin(
     new Themeswitcher\CommandFactory()
 );
 $_Themeswitcher_controller->dispatch();

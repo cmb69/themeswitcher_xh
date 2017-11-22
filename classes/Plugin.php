@@ -21,7 +21,7 @@
 
 namespace Themeswitcher;
 
-class Controller
+class Plugin
 {
     /**
      * @var CommandFactory
