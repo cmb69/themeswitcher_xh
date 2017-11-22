@@ -44,7 +44,7 @@ class ThemeSelectionCommand
      */
     public function render()
     {
-        global $su, $pth, $bjs;
+        global $su;
         static $run = 0;
 
         $run++;
