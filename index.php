@@ -20,11 +20,6 @@
  */
 
 /**
- * The plugin version.
- */
-define('THEMESWITCHER_VERSION', '@THEMESWITCHER_VERSION@');
-
-/**
  * @return string
  */
 function themeswitcher()

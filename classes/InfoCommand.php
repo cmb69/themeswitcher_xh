@@ -32,7 +32,7 @@ class InfoCommand
 
         $view = new View('info');
         $view->logo = "{$pth['folder']['plugins']}themeswitcher/themeswitcher.png";
-        $view->version = THEMESWITCHER_VERSION;
+        $view->version = Plugin::VERSION;
         return (string) $view;
     }
 }
