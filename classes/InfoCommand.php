@@ -21,6 +21,7 @@
 
 namespace Themeswitcher;
 
+use Pfw\SystemCheckService;
 use Pfw\View\View;
 
 class InfoCommand
@@ -37,7 +38,15 @@ class InfoCommand
             ->template('info')
             ->data([
                 'logo' => "{$pth['folder']['plugins']}themeswitcher/themeswitcher.png",
-                'version' => Plugin::VERSION
+                'version' => Plugin::VERSION,
+                'checks' => (new SystemCheckService)
+                    ->minPhpVersion('5.4.0')
+                    ->minXhVersion('1.6.3')
+                    ->plugin('pfw')
+                    ->writable("{$pth['folder']['plugins']}themeswitcher/config/")
+                    ->writable("{$pth['folder']['plugins']}themeswitcher/css/")
+                    ->writable("{$pth['folder']['plugins']}themeswitcher/languages/")
+                    ->getChecks()
             ])
             ->render();
         return ob_get_clean();
