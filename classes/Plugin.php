@@ -23,7 +23,7 @@ namespace Themeswitcher;
 
 class Plugin
 {
-    const VERSION = '@THEMESWITCHER_VERSION@';
+    const VERSION = '@PLUGIN_VERSION@';
 
     /**
      * @var CommandFactory
