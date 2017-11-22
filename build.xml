@@ -2,6 +2,8 @@
 
 <project name="Themeswitcher" default="help">
 
+    <import file="../pfw/build.xml"/>
+
     <fileset id="php-sources" dir=".">
         <include name="index.php"/>
         <include name="classes/*.php"/>
@@ -10,55 +12,6 @@
     <fileset id="unit-tests" dir="tests/unit">
         <include name="*Test.php"/>
     </fileset>
-
-    <target name="help" description="lists available targets">
-        <exec command="phing -l" outputProperty="help"/>
-        <echo>${help}</echo>
-    </target>
-
-    <target name="sniff" description="checks adherence to coding standards">
-        <phpcodesniffer standard="PSR2" format="full">
-            <fileset refid="php-sources"/>
-            <fileset refid="unit-tests"/>
-        </phpcodesniffer>
-    </target>
-
-    <target name="mess" description="detects code flaws">
-        <phpmd>
-            <fileset refid="php-sources"/>
-            <fileset refid="unit-tests"/>
-         </phpmd>
-    </target>
-
-    <target name="compat" description="checks compatibility with PHP_CompatInfo">
-        <exec command="phpcompatinfo analyser:run --alias current" logoutput="true"/>
-    </target>
-
-    <target name="unit-tests" description="runs all unit tests">
-        <phpunit bootstrap="tests/bootstrap.php" haltonerror="true" haltonfailure="true">
-            <formatter type="plain" usefile="false"/>
-            <batchtest>
-                <fileset refid="unit-tests"/>
-            </batchtest>
-        </phpunit>
-    </target>
-
-<!--    <target name="attack-tests">
-        <fail unless="env.CMSIMPLEDIR" message="CMSIMPLEDIR undefined!"/>
-        <phpunit haltonerror="true" haltonfailure="true">
-            <formatter type="plain" usefile="false"/>
-            <batchtest>
-                <fileset dir="tests/attack">
-                    <include name="*Test.php"/>
-                </fileset>
-            </batchtest>
-        </phpunit>
-    </target>
--->
-
-    <target name="coverage" description="generates coverage report">
-        <exec command="phpunit --configuration coverage.xml" logoutput="true"/>
-    </target>
 
     <target name="build" description="builds distributable ZIP archive">
         <fail unless="version" message="version is not defined!"/>
