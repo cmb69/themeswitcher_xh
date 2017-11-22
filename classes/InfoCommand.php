@@ -21,6 +21,8 @@
 
 namespace Themeswitcher;
 
+use Pfw\View\View;
+
 class InfoCommand
 {
     /**
@@ -30,9 +32,14 @@ class InfoCommand
     {
         global $pth;
 
-        $view = new View('info');
-        $view->logo = "{$pth['folder']['plugins']}themeswitcher/themeswitcher.png";
-        $view->version = Plugin::VERSION;
-        return (string) $view;
+        ob_start();
+        (new View('themeswitcher'))
+            ->template('info')
+            ->data([
+                'logo' => "{$pth['folder']['plugins']}themeswitcher/themeswitcher.png",
+                'version' => Plugin::VERSION
+            ])
+            ->render();
+        return ob_get_clean();
     }
 }

@@ -22,6 +22,7 @@
 namespace Themeswitcher;
 
 use stdClass;
+use Pfw\View\View;
 
 class ThemeSelectionCommand
 {
@@ -53,11 +54,16 @@ class ThemeSelectionCommand
             );
         }
         $run++;
-        $view = new View('form');
-        $view->run = $run;
-        $view->selected = $su;
-        $view->themes = $this->getThemes();
-        return (string) $view;
+        ob_start();
+        (new View('themeswitcher'))
+            ->template('form')
+            ->data([
+                'run' => $run,
+                'selected' => $su,
+                'themes' => $this->getThemes()
+            ])
+            ->render();
+        return ob_get_clean();
     }
 
     /**

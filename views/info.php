@@ -1,6 +1,6 @@
 <h1>Themeswitcher</h1>
-<img src="<?=$this->logo()?>" class="themeswitcher_logo" alt="<?=$this->text('alt_logo')?>">
-<p>Version: <?=$this->version()?></p>
+<img src="<?=$logo?>" class="themeswitcher_logo" alt="<?=$this->text('alt_logo')?>">
+<p>Version: <?=$version?></p>
 <p>Copyright © 2014-2017 <a href="http://3-magi.net/">Christoph M. Becker</a></p>
 <p class="themeswitcher_license">
     Themeswitcher_XH is free software: you can redistribute it and/or modify it
