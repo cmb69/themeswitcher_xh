@@ -47,12 +47,6 @@ class ThemeSelectionCommand
         global $su, $pth, $bjs;
         static $run = 0;
 
-        if (!$run) {
-            $bjs .= sprintf(
-                '<script type="text/javascript" src="%s"></script>',
-                "{$pth['folder']['plugins']}themeswitcher/themeswitcher.min.js"
-            );
-        }
         $run++;
         ob_start();
         (new View('themeswitcher'))
