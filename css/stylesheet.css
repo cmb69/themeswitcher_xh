@@ -8,15 +8,3 @@
 }
 .themeswitcher_select_form select {}
 .themeswitcher_select_form button {}
-
-/*
- * Plugin administration.
- */
-
-.themeswitcher_logo {
-    float: left;
-    margin: 0 1.5em 0.5em 0;
-}
-.themeswitcher_license {
-    text-align: justify;
-}
