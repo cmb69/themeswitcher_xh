@@ -64,11 +64,11 @@ class Plugin
      */
     private function isAutomatic()
     {
-        global $print, $edit, $plugin_cf;
+        global $print, $edit, $f, $plugin_cf;
 
         $mode = $plugin_cf['themeswitcher']['display_automatic'];
         return ($mode == 'always' || $mode == 'frontend' && !$edit)
-            && !$print;
+            && !$print && !in_array($f, ['login', 'xh_login_failed', 'forgotten']);
     }
 
     /**
