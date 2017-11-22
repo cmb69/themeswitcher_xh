@@ -91,10 +91,10 @@ class ControllerTest extends TestCase
      */
     public function testRendersInfoCommand()
     {
-        global $themeswitcher, $admin;
+        global $admin;
 
-        $themeswitcher = 'true';
         $admin = '';
+        $this->createFunctionMock('XH_wantsPluginAdministration')->expects($this->any())->willReturn(true);
         $this->printPluginAdmin->expects($this->once());
         $this->infoCommand->expects($this->once())->method('render');
         $this->subject->dispatch();
@@ -105,11 +105,11 @@ class ControllerTest extends TestCase
      */
     public function testPluginAdminCommon()
     {
-        global $themeswitcher, $admin, $action;
+        global $admin, $action;
 
-        $themeswitcher = 'true';
         $admin = 'plugin_config';
         $action = 'plugin_edit';
+        $this->createFunctionMock('XH_wantsPluginAdministration')->expects($this->any())->willReturn(true);
         $this->printPluginAdmin->expects($this->once());
         $pluginAdminCommon = $this->createFunctionMock('plugin_admin_common');
         $pluginAdminCommon->expects($this->once())->with($action, $admin, 'themeswitcher');
