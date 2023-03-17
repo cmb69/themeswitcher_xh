@@ -25,6 +25,7 @@ use Themeswitcher\Infra\Request;
 use Themeswitcher\Infra\Templates;
 use Themeswitcher\Infra\View;
 use Themeswitcher\Logic\Util;
+use Themeswitcher\Value\Response;
 
 class ThemeSelectionCommand
 {
@@ -45,17 +46,21 @@ class ThemeSelectionCommand
         $this->view = $view;
     }
 
-    /** @return void */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, bool $automatic = false): Response
     {
-        if ($this->isAutomatic()) {
-            $this->outputContents($this->render($request));
+        if (!$automatic) {
+            return Response::create($this->render($request, $automatic));
         }
+        if ($this->isAutomatic()) {
+            return Response::create()->withBjs($this->render($request, $automatic));
+        }
+        return Response::create();
     }
 
-    public function render(Request $request): string
+    private function render(Request $request, bool $automatic): string
     {
         return $this->view->render("form", [
+            "class" => $automatic ? "themeswitcher_automatic" : "",
             'selected' => $request->su(),
             'themes' => $this->templateRecords($request)
         ]);
@@ -63,24 +68,9 @@ class ThemeSelectionCommand
 
     private function isAutomatic(): bool
     {
-        global $print, $edit, $f;
-
+        global $edit;
         $mode = $this->conf['display_automatic'];
-        return ($mode == 'always' || $mode == 'frontend' && !$edit)
-            && !$print && !in_array($f, ['login', 'xh_login_failed', 'forgotten']);
-    }
-
-    /** @return void */
-    private function outputContents(string $html)
-    {
-        global $c, $o, $pd_s, $s, $edit, $xh_publisher;
-
-        $startPage = $xh_publisher->getFirstPublishedPage();
-        if ($pd_s === $startPage && $s !== $startPage && !(defined("XH_ADM") && XH_ADM && $edit)) {
-            $c[$pd_s] = $html . $c[$pd_s];
-        } else {
-            $o .= $html;
-        }
+        return ($mode == 'always' || $mode == 'frontend' && !$edit);
     }
 
     /** @return list<array{name:string,selected:string}> */

@@ -1,10 +1,18 @@
-/*
- * Theme selection.
- */
-
+/* theme selector */
 .themeswitcher_select_form {}
-.themeswitcher_select_form label {
+.themeswitcher_select_form label span {
     padding-right: 1em;
 }
 .themeswitcher_select_form select {}
 .themeswitcher_select_form button {}
+
+/* automatic theme selector additions */
+.themeswitcher_automatic {
+    z-index: 5;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding: 1em;
+    color: #333;
+    background: rgba(255, 255, 255, 0.8);
+}

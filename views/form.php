@@ -4,11 +4,12 @@ use Themeswitcher\Infra\View;
 
 /**
  * @var View $this
+ * @var string $class 
  * @var string $selected
  * @var list<array{name:string,selected:string}> $themes
  */
 ?>
-<form class="themeswitcher_select_form" method="get">
+<form class="themeswitcher_select_form <?=$class?>" method="get">
     <input type="hidden" name="selected" value="<?=$selected?>">
     <label>
         <span><?=$this->text('label_theme')?></span>

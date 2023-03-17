@@ -36,10 +36,20 @@ class Response
     /** @var string|null */
     private $themeCookie = null;
 
+    /** @var string|null */
+    private $bjs = null;
+
     public function withThemeCookie(string $themeCookie): self
     {
         $that = clone $this;
         $that->themeCookie = $themeCookie;
+        return $that;
+    }
+
+    public function withBjs(string $bjs): self
+    {
+        $that = clone $this;
+        $that->bjs = $bjs;
         return $that;
     }
 
@@ -51,5 +61,10 @@ class Response
     public function themeCookie(): ?string
     {
         return $this->themeCookie;
+    }
+
+    public function bjs(): ?string
+    {
+        return $this->bjs;
     }
 }

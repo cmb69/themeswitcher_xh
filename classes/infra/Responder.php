@@ -27,8 +27,12 @@ class Responder
 {
     public static function respond(Response $response): string
     {
+        global $bjs;
         if ($response->themeCookie() !== null) {
             setcookie('themeswitcher_theme', $response->themeCookie(), 0, CMSIMPLE_ROOT);
+        }
+        if ($response->bjs() !== null) {
+            $bjs .= $response->bjs();
         }
         return $response->output();
     }

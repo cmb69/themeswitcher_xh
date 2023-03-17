@@ -21,6 +21,7 @@
 
 use Themeswitcher\Dic;
 use Themeswitcher\Infra\Request;
+use Themeswitcher\Infra\Responder;
 
 const THEMESWITCHER_VERSION = "1.0beta4";
 
@@ -29,8 +30,8 @@ const THEMESWITCHER_VERSION = "1.0beta4";
  */
 function themeswitcher()
 {
-    return Dic::makeThemeSelectionCommand()->render(Request::current());
+    return Responder::respond(Dic::makeThemeSelectionCommand()(Request::current()));
 }
 
 Dic::makeSelectThemeCommand()->execute(Request::current());
-Dic::makeThemeSelectionCommand()(Request::current());
+Responder::respond(Dic::makeThemeSelectionCommand()(Request::current(), true));
