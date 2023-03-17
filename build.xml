@@ -22,13 +22,13 @@
   </target>
 
   <target name="unit-tests" description="runs all unit tests">
-    <exec executable="phpunit" passthru="true" checkreturn="true">
-      <arg line="--bootstrap=tests/unit/bootstrap.php tests/unit"/>
-    </exec>
+    <exec executable="phpunit" passthru="true" checkreturn="true"/>
   </target>
 
   <target name="coverage" description="generates coverage report">
-    <exec command="phpdbg -qrr vendor/phpunit/phpunit/phpunit --configuration coverage.xml" logoutput="true"/>
+    <exec executable="phpunit" passthru="true" checkreturn="true">
+      <arg line="--coverage-html coverage"/>
+    </exec>
   </target>
 
   <target name="build">
@@ -40,7 +40,7 @@
         <exclude name="tests/**"/>
         <exclude name="build.xml"/>
         <exclude name="composer.*"/>
-        <exclude name="coverage.xml"/>
+        <exclude name="phpunit.xml"/>
         <exclude name="teplad.xml"/>
       </fileset>
     </move>
