@@ -1,3 +1,14 @@
+<?php
+
+use Themeswitcher\Infra\View;
+
+/**
+ * @var View $this
+ * @var string $selected
+ * @var int $run
+ * @var list<stdClass> $themes
+ */
+?>
 <form class="themeswitcher_select_form" method="get">
     <input type="hidden" name="selected" value="<?=$selected?>">
     <label for="themeswitcher_<?=$run?>"><?=$this->text('label_theme')?></label>

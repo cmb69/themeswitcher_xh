@@ -21,12 +21,12 @@
 
 namespace Themeswitcher;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
 
-class ModelTest extends PHPUnit_Framework_TestCase
+class ModelTest extends TestCase
 {
     /**
      * @var Model
@@ -38,10 +38,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
      */
     private $themeFolder;
 
-    /**
-     * @return void
-     */
-    public function setUp()
+    public function setUp(): void
     {
         global $pth, $plugin_cf;
 

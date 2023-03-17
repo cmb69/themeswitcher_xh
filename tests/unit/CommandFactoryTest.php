@@ -21,19 +21,16 @@
 
 namespace Themeswitcher;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class CommandFactoryTest extends PHPUnit_Framework_TestCase
+class CommandFactoryTest extends TestCase
 {
     /**
      * @var CommandFactory
      */
     private $subject;
 
-    /**
-     * @return void
-     */
-    public function setUp()
+    public function setUp(): void
     {
         $this->subject = new CommandFactory();
     }

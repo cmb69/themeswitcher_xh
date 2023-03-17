@@ -1,3 +1,14 @@
+<?php
+
+use Themeswitcher\Infra\View;
+
+/**
+ * @var View $this
+ * @var string $logo
+ * @var string $version
+ * @var list<stdClass> $checks
+ */
+?>
 <h1>Themeswitcher</h1>
 <img src="<?=$logo?>" alt="<?=$this->text('alt_logo')?>">
 <p>Version: <?=$version?></p>

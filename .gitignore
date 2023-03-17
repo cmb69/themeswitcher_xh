@@ -1,5 +1,5 @@
-tests/coverage
-vendor
-/classes.svg
-/README.htm
+/coverage
+/vendor
 /composer.lock
+/.phpunit.cache
+/tools

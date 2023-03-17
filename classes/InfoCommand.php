@@ -41,6 +41,7 @@ class InfoCommand
         ]);
     }
 
+    /** @return list<stdClass> */
     private function checks(): array
     {
         global $pth;
