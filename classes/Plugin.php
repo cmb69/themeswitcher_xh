@@ -51,7 +51,7 @@ class Plugin
         if ($this->isAutomatic()) {
             $this->outputContents($this->renderThemeSelection());
         }
-        if (XH_ADM) {
+        if (defined("XH_ADM") && XH_ADM) {
             XH_registerStandardPluginMenuItems(false);
             if ($this->isAdministrationRequested()) {
                 $this->handleAdministration();
@@ -84,7 +84,7 @@ class Plugin
         } else {
             $startPage = $_XH_firstPublishedPage;
         }
-        if ($pd_s === $startPage && $s !== $startPage && !(XH_ADM && $edit)) {
+        if ($pd_s === $startPage && $s !== $startPage && !(defined("XH_ADM") && XH_ADM && $edit)) {
             $c[$pd_s] = $html . $c[$pd_s];
         } else {
             $o .= $html;
@@ -104,7 +104,7 @@ class Plugin
      */
     private function handleAdministration()
     {
-        global $admin, $action, $o;
+        global $admin, $o;
 
         $o .= print_plugin_admin('off');
         switch ($admin) {
@@ -112,7 +112,7 @@ class Plugin
                 $o .= $this->commandFactory->makeInfoCommand()->render();
                 break;
             default:
-                $o .= plugin_admin_common($action, $admin, 'themeswitcher');
+                $o .= plugin_admin_common();
         }
     }
 

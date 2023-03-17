@@ -29,7 +29,7 @@ class View
     /** @var array<string,string> */
     private $text;
 
-    /** @param array<string,string  $text */
+    /** @param array<string,string>  $text */
     public function __construct(string $templateFolder, array $text)
     {
         $this->templateFolder = $templateFolder;
@@ -42,12 +42,13 @@ class View
         return sprintf($this->esc($this->text[$key]), ...$args);
     }
 
+    /** @param array<string,mixed> $_data */
     public function render(string $_template, array $_data): string
     {
         extract($_data);
         ob_start();
         include $this->templateFolder . $_template . ".php";
-        return ob_get_clean();
+        return (string) ob_get_clean();
     }
 
     public function esc(string $string): string
