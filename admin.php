@@ -20,6 +20,7 @@
  */
 
 use Themeswitcher\Dic;
+use Themeswitcher\Infra\Responder;
 
 /**
  * @var string $admin
@@ -32,7 +33,7 @@ if (XH_wantsPluginAdministration("themeswitcher")) {
     $o .= print_plugin_admin("off");
     switch ($admin) {
         case "":
-            $o .= Dic::makeInfoCommand()->render();
+            $o .= Responder::respond(Dic::makePluginInfo()());
             break;
         default:
             $o .= plugin_admin_common();

@@ -23,8 +23,9 @@ namespace Themeswitcher;
 
 use Themeswitcher\Infra\SystemChecker;
 use Themeswitcher\Infra\View;
+use Themeswitcher\Value\Response;
 
-class InfoCommand
+class PluginInfo
 {
     /** @var string */
     private $pluginFolder;
@@ -42,21 +43,18 @@ class InfoCommand
         $this->view = $view;
     }
 
-    /**
-     * @return string
-     */
-    public function render()
+    public function __invoke(): Response
     {
-        return $this->view->render("info", [
-            'version' => THEMESWITCHER_VERSION,
-            'checks' => [
+        return Response::create($this->view->render("info", [
+            "version" => THEMESWITCHER_VERSION,
+            "checks" => [
                 $this->checkPhpVersion("7.1.0"),
                 $this->checkXhVersion("1.7.0"),
                 $this->checkWritability($this->pluginFolder . "config/"),
                 $this->checkWritability($this->pluginFolder . "css/"),
                 $this->checkWritability($this->pluginFolder . "languages/"),
             ]
-        ]);
+        ]))->withTitle($this->view->esc("Themeswitcher 1.0beta4"));
     }
 
     /** @return array{class:string,key:string,arg:string,statekey:string} */

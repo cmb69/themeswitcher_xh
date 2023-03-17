@@ -46,10 +46,10 @@ class Dic
         );
     }
 
-    public static function makeInfoCommand(): InfoCommand
+    public static function makePluginInfo(): PluginInfo
     {
         global $pth;
-        return new InfoCommand($pth["folder"]["plugins"] . "themeswitcher/", new SystemChecker, self::makeView());
+        return new PluginInfo($pth["folder"]["plugins"] . "themeswitcher/", new SystemChecker, self::makeView());
     }
 
     private static function makeView(): View

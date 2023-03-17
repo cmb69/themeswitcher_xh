@@ -33,6 +33,9 @@ class Response
     /** @var string */
     private $output;
 
+    /** @var string */
+    private $title = null;
+
     /** @var string|null */
     private $themeCookie = null;
 
@@ -43,6 +46,13 @@ class Response
     {
         $that = clone $this;
         $that->themeCookie = $themeCookie;
+        return $that;
+    }
+
+    public function withTitle(string $title): self
+    {
+        $that = clone $this;
+        $that->title = $title;
         return $that;
     }
 
@@ -61,6 +71,11 @@ class Response
     public function themeCookie(): ?string
     {
         return $this->themeCookie;
+    }
+
+    public function title(): ?string
+    {
+        return $this->title;
     }
 
     public function bjs(): ?string

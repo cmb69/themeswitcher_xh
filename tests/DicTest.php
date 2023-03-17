@@ -44,8 +44,8 @@ class DicTest extends TestCase
         $this->assertInstanceOf(SelectThemeCommand::class, Dic::makeSelectThemeCommand());
     }
 
-    public function testMakeInfoCommand(): void
+    public function testMakePluginInfo(): void
     {
-        $this->assertInstanceOf(InfoCommand::class, Dic::makeInfoCommand());
+        $this->assertInstanceOf(PluginInfo::class, Dic::makePluginInfo());
     }
 }
