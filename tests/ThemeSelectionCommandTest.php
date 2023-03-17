@@ -23,18 +23,20 @@ namespace Themeswitcher;
 
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
+use Themeswitcher\Infra\Templates;
 use Themeswitcher\Infra\View;
 
 class ThemeSelectionCommandTest extends TestCase
 {
     public function testRendersThemeSelector(): void
     {
-        global $cf;
+        global $cf, $plugin_cf;
         $cf = ["site" => ["template" => "foo_theme"]];
-        $model = $this->createMock(Model::class);
-        $model->method("getThemes")->willReturn(["foo_theme", "bar_template"]);
+        $plugin_cf = ["themeswitcher" => ["allowed_themes" => "foo_theme,bar_template"]];
+        $templates = $this->createMock(Templates::class);
+        $templates->method("findAll")->willReturn(["foo_theme", "bar_template"]);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["themeswitcher"]);
-        $sut = new ThemeSelectionCommand($model, $view);
+        $sut = new ThemeSelectionCommand($templates, $view);
         $response = $sut->render();
         Approvals::verifyHtml($response);
     }

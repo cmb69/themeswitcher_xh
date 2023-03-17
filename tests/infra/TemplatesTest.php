@@ -19,17 +19,17 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Themeswitcher;
+namespace Themeswitcher\Infra;
 
 use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
 
-class ModelTest extends TestCase
+class TemplatesTest extends TestCase
 {
     /**
-     * @var Model
+     * @var Templates
      */
     private $subject;
 
@@ -53,28 +53,25 @@ class ModelTest extends TestCase
         $plugin_cf = array(
             'themeswitcher' => ['allowed_themes' => '*']
         );
-        $this->subject = new Model();
+        $this->subject = new Templates();
     }
 
     /**
      * @return void
      */
-    public function testGetThemes()
+    public function testAllTemplates()
     {
-        $this->assertEquals(
-            array('one', 'three', 'two'),
-            $this->subject->getThemes()
-        );
+        $this->assertEquals(['one', 'three', 'two'], $this->subject->findAll());
     }
 
     /**
      * @return void
      */
-    public function testSwitchTheme()
+    public function testSwitchesTemplate()
     {
         global $pth;
 
-        $this->subject->switchTheme('two');
+        $this->subject->switch('two');
         $this->assertEquals(
             array(
                 'folder' => array(

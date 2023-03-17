@@ -22,14 +22,14 @@
 namespace Themeswitcher;
 
 use stdClass;
+use Themeswitcher\Infra\Templates;
 use Themeswitcher\Infra\View;
+use Themeswitcher\Logic\Util;
 
 class ThemeSelectionCommand
 {
-    /**
-     * @var Model
-     */
-    private $model;
+    /** @var Templates */
+    private $templates;
 
     /** @var View */
     private $view;
@@ -37,9 +37,9 @@ class ThemeSelectionCommand
     /**
      * @return void
      */
-    public function __construct(Model $model, View $view)
+    public function __construct(Templates $templates, View $view)
     {
-        $this->model = $model;
+        $this->templates = $templates;
         $this->view = $view;
     }
 
@@ -104,8 +104,13 @@ class ThemeSelectionCommand
      */
     private function getThemes()
     {
+        global $plugin_cf;
+        $allowedTemplates = Util::allowedThemes(
+            $this->templates->findAll(),
+            $plugin_cf['themeswitcher']['allowed_themes']
+        );
         $themes = [];
-        foreach ($this->model->getThemes() as $name) {
+        foreach ($allowedTemplates as $name) {
             $themes[] = (object) array(
                 'name' => $name,
                 'selected' => $name === $this->getCurrentTheme() ? 'selected' : ''

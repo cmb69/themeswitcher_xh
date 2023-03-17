@@ -22,6 +22,7 @@
 namespace Themeswitcher;
 
 use Themeswitcher\Infra\SystemChecker;
+use Themeswitcher\Infra\Templates;
 use Themeswitcher\Infra\View;
 
 class Dic
@@ -29,7 +30,7 @@ class Dic
     public static function makeThemeSelectionCommand(): ThemeSelectionCommand
     {
         return new ThemeSelectionCommand(
-            new Model(),
+            new Templates(),
             self::makeView()
         );
     }
@@ -37,7 +38,7 @@ class Dic
     public static function makeSelectThemeCommand(): SelectThemeCommand
     {
         return new SelectThemeCommand(
-            new Model()
+            new Templates()
         );
     }
 

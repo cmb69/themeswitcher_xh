@@ -22,31 +22,33 @@
 namespace Themeswitcher;
 
 use PHPUnit\Framework\TestCase;
+use Themeswitcher\Infra\Templates;
 
 class SelectThemeCommandTest extends TestCase
 {
     /** @var SelectThemeCommand */
     private $subject;
 
-    /** @var Model */
-    private $model;
+    /** @var Templates */
+    private $templates;
 
     /**
      * @return void
      */
     public function setUp(): void
     {
-
-        $this->model = $this->createMock('Themeswitcher\Model');
-        $this->model->expects($this->any())->method('getThemes')
+        global $plugin_cf;
+        $plugin_cf = ["themeswitcher" => ["allowed_themes" => "one"]];
+        $this->templates = $this->createMock(Templates::class);
+        $this->templates->expects($this->any())->method('findAll')
             ->will($this->returnValue(array('one', 'three', 'two')));
-        $this->subject = new SelectThemeCommand($this->model);
+        $this->subject = new SelectThemeCommand($this->templates);
     }
 
     public function testSwitchesThemeOnGet(): void
     {
         $_GET = array('themeswitcher_select' => 'one');
-        $this->model->expects($this->once())->method('switchTheme')
+        $this->templates->expects($this->once())->method('switch')
             ->with($this->equalTo('one'));
         $this->subject->execute();
     }
@@ -54,7 +56,7 @@ class SelectThemeCommandTest extends TestCase
     public function testSwitchesThemeOnCookie(): void
     {
         $_COOKIE = array('themeswitcher_theme' => 'one');
-        $this->model->expects($this->once())->method('switchTheme')
+        $this->templates->expects($this->once())->method('switch')
             ->with($this->equalTo('one'));
         $this->subject->execute();
     }
@@ -62,7 +64,7 @@ class SelectThemeCommandTest extends TestCase
     public function testDontSwitchThemeIfNotAllowed(): void
     {
         $_GET = array('themeswitcher_select' => 'foo');
-        $this->model->expects($this->never())->method('switchTheme');
+        $this->templates->expects($this->never())->method('switch');
         $this->subject->execute();
     }
 
@@ -71,9 +73,9 @@ class SelectThemeCommandTest extends TestCase
         global $pd_current, $plugin_cf;
 
         $pd_current = array('template' => 'two');
-        $plugin_cf = array('themeswitcher' => array('prefer_page_theme' => ''));
+        $plugin_cf['themeswitcher']['prefer_page_theme'] = '';
         $_GET = array('themeswitcher_select' => 'one');
-        $this->model->expects($this->once())->method('switchTheme');
+        $this->templates->expects($this->once())->method('switch');
         $this->subject->execute();
     }
 
@@ -82,9 +84,9 @@ class SelectThemeCommandTest extends TestCase
         global $pd_current, $plugin_cf;
 
         $pd_current = array('template' => 'two');
-        $plugin_cf = array('themeswitcher' => array('prefer_page_theme' => 'true'));
+        $plugin_cf['themeswitcher']['prefer_page_theme'] = 'true';
         $_GET = array('themeswitcher_select' => 'one');
-        $this->model->expects($this->never())->method('switchTheme');
+        $this->templates->expects($this->never())->method('switch');
         $this->subject->execute();
     }
 

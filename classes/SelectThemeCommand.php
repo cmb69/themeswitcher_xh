@@ -21,21 +21,23 @@
 
 namespace Themeswitcher;
 
+use Themeswitcher\Infra\Templates;
+use Themeswitcher\Logic\Util;
 use Themeswitcher\Value\Response;
 
 class SelectThemeCommand
 {
     /**
-     * @var Model
+     * @var Templates
      */
-    private $model;
+    private $templates;
 
     /**
      * @return void
      */
-    public function __construct(Model $model)
+    public function __construct(Templates $templates)
     {
-        $this->model = $model;
+        $this->templates = $templates;
     }
 
     public function execute(): Response
@@ -44,7 +46,7 @@ class SelectThemeCommand
             if ($this->isUserThemeAllowed()
                 && (!$this->hasPageTheme() || !$this->isPageThemePreferred())
             ) {
-                $this->model->switchTheme($this->getUserTheme());
+                $this->templates->switch($this->getUserTheme());
                 return Response::create()->withThemeCookie($this->getUserTheme());
             }
         }
@@ -56,7 +58,12 @@ class SelectThemeCommand
      */
     private function isUserThemeAllowed()
     {
-        return in_array($this->getUserTheme(), $this->model->getThemes());
+        global $plugin_cf;
+        $allowedTemplates = Util::allowedThemes(
+            $this->templates->findAll(),
+            $plugin_cf['themeswitcher']['allowed_themes']
+        );
+        return in_array($this->getUserTheme(), $allowedTemplates, true);
     }
 
     /**
