@@ -50,7 +50,7 @@ class InfoCommand
         return $this->view->render("info", [
             'version' => THEMESWITCHER_VERSION,
             'checks' => [
-                $this->checkPhpVersion("5.4.0"),
+                $this->checkPhpVersion("7.1.0"),
                 $this->checkXhVersion("1.6.3"),
                 $this->checkWritability($this->pluginFolder . "config/"),
                 $this->checkWritability($this->pluginFolder . "css/"),
