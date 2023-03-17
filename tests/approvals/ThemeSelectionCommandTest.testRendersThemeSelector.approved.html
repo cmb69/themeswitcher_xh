@@ -10,8 +10,7 @@
     <button class="themeswitcher_button">Activate</button>
 </form>
 <script>
-    const each = Array.prototype.forEach;
-    each.call(document.getElementsByClassName("themeswitcher_button"), function (button) {
+    Array.prototype.forEach.call(document.getElementsByClassName("themeswitcher_button"), function (button) {
         button.style.display = "none";
     });
 </script>
