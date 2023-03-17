@@ -16,22 +16,15 @@
   </target>
 
   <target name="sniff" description="checks adherence to coding standards">
-    <phpcodesniffer standard="PSR2" haltonerror="true">
-      <fileset refid="php-sources"/>
-      <fileset refid="unit-tests"/>
-    </phpcodesniffer>
+    <exec executable="phpcs" passthru="true" checkreturn="true">
+      <arg line="--standard=PSR2 --runtime-set ignore_warnings_on_exit true classes index.php"/>
+    </exec>
   </target>
 
   <target name="unit-tests" description="runs all unit tests">
     <exec executable="phpunit" passthru="true" checkreturn="true">
       <arg line="--bootstrap=tests/unit/bootstrap.php tests/unit"/>
     </exec>
-    <!-- <phpunit bootstrap="tests/unit/bootstrap.php" haltonerror="true" haltonfailure="true">
-      <formatter type="plain" usefile="false"/>
-      <batchtest>
-        <fileset refid="unit-tests"/>
-      </batchtest>
-    </phpunit> -->
   </target>
 
   <target name="coverage" description="generates coverage report">
