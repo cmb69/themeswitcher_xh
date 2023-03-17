@@ -22,7 +22,7 @@
 namespace Themeswitcher;
 
 use stdClass;
-use Pfw\View\View;
+use Themeswitcher\Infra\View;
 
 class ThemeSelectionCommand
 {
@@ -44,20 +44,16 @@ class ThemeSelectionCommand
      */
     public function render()
     {
-        global $su;
+        global $su, $pth, $plugin_tx;
         static $run = 0;
 
         $run++;
-        ob_start();
-        (new View('themeswitcher'))
-            ->template('form')
-            ->data([
-                'run' => $run,
-                'selected' => $su,
-                'themes' => $this->getThemes()
-            ])
-            ->render();
-        return ob_get_clean();
+        $view = new View($pth["folder"]["plugins"] . "themeswitcher/views/", $plugin_tx["themeswitcher"]);
+        return $view->render("form", [
+            'run' => $run,
+            'selected' => $su,
+            'themes' => $this->getThemes()
+        ]);
     }
 
     /**

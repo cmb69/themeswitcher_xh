@@ -21,8 +21,8 @@
 
 namespace Themeswitcher;
 
-use Pfw\SystemCheckService;
-use Pfw\View\View;
+use Themeswitcher\Infra\View;
+use stdClass;
 
 class InfoCommand
 {
@@ -31,24 +31,58 @@ class InfoCommand
      */
     public function render()
     {
-        global $pth;
+        global $pth, $plugin_tx;
 
-        ob_start();
-        (new View('themeswitcher'))
-            ->template('info')
-            ->data([
-                'logo' => "{$pth['folder']['plugins']}themeswitcher/themeswitcher.png",
-                'version' => Plugin::VERSION,
-                'checks' => (new SystemCheckService)
-                    ->minPhpVersion('5.4.0')
-                    ->minXhVersion('1.6.3')
-                    ->plugin('pfw')
-                    ->writable("{$pth['folder']['plugins']}themeswitcher/config/")
-                    ->writable("{$pth['folder']['plugins']}themeswitcher/css/")
-                    ->writable("{$pth['folder']['plugins']}themeswitcher/languages/")
-                    ->getChecks()
-            ])
-            ->render();
-        return ob_get_clean();
+        $view = new View($pth["folder"]["plugins"] . "themeswitcher/views/", $plugin_tx["themeswitcher"]);
+        return $view->render("info", [
+            'logo' => "{$pth['folder']['plugins']}themeswitcher/themeswitcher.png",
+            'version' => Plugin::VERSION,
+            'checks' => $this->checks()
+        ]);
+    }
+
+    private function checks(): array
+    {
+        global $pth;
+        return [
+            $this->checkPhpVersion("5.4.0"),
+            $this->checkXhVersion("1.6.3"),
+            $this->checkWritability($pth["folder"]["plugins"] . "themeswitcher/config/"),
+            $this->checkWritability($pth["folder"]["plugins"] . "themeswitcher/css/"),
+            $this->checkWritability($pth["folder"]["plugins"] . "themeswitcher/languages/"),
+        ];
+    }
+
+    private function checkPhpVersion(string $version): stdClass
+    {
+        global $plugin_tx;
+        $state = version_compare(PHP_VERSION, $version, "ge") ? "success" : "fail";
+        return (object) [
+            "state" => $state,
+            "label" => sprintf($plugin_tx["themeswitcher"]["syscheck_phpversion"], $version),
+            "stateLabel" => $plugin_tx["themeswitcher"]["syscheck_$state"],
+        ];
+    }
+
+    private function checkXhVersion(string $version): stdClass
+    {
+        global $plugin_tx;
+        $state = version_compare(CMSIMPLE_XH_VERSION, "CMSimple_XH $version", "ge") ? "success" : "fail";
+        return (object) [
+            "state" => $state,
+            "label" => sprintf($plugin_tx["themeswitcher"]["syscheck_xhversion"], $version),
+            "stateLabel" => $plugin_tx["themeswitcher"]["syscheck_$state"],
+        ];
+    }
+
+    private function checkWritability(string $folder): stdClass
+    {
+        global $plugin_tx;
+        $state = is_writable($folder) ? "success" : "fail";
+        return (object) [
+            "state" => $state,
+            "label" => sprintf($plugin_tx["themeswitcher"]["syscheck_writable"], $folder),
+            "stateLabel" => $plugin_tx["themeswitcher"]["syscheck_$state"],
+        ];
     }
 }
