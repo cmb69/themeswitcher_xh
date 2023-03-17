@@ -37,7 +37,9 @@ class Dic
 
     public static function makeSelectThemeCommand(): SelectThemeCommand
     {
+        global $plugin_cf;
         return new SelectThemeCommand(
+            $plugin_cf["themeswitcher"],
             new Templates()
         );
     }

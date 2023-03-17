@@ -21,80 +21,47 @@
 
 namespace Themeswitcher;
 
+use Themeswitcher\Infra\Request;
 use Themeswitcher\Infra\Templates;
 use Themeswitcher\Logic\Util;
 use Themeswitcher\Value\Response;
 
 class SelectThemeCommand
 {
-    /**
-     * @var Templates
-     */
+    /** @var array<string,string> */
+    private $conf;
+
+    /** @var Templates */
     private $templates;
 
-    /**
-     * @return void
-     */
-    public function __construct(Templates $templates)
+    /** @param array<string,string> $conf */
+    public function __construct(array $conf, Templates $templates)
     {
+        $this->conf = $conf;
         $this->templates = $templates;
     }
 
-    public function execute(): Response
+    public function execute(Request $request): Response
     {
-        if (isset($_GET['themeswitcher_select']) || isset($_COOKIE['themeswitcher_theme'])) {
-            if ($this->isUserThemeAllowed()
-                && (!$this->hasPageTheme() || !$this->isPageThemePreferred())
-            ) {
-                $this->templates->switch($this->getUserTheme());
-                return Response::create()->withThemeCookie($this->getUserTheme());
-            }
+        if ($request->selectedTemplate() === null) {
+            return Response::create();
         }
-        return Response::create();
-    }
-
-    /**
-     * @return bool
-     */
-    private function isUserThemeAllowed()
-    {
-        global $plugin_cf;
-        $allowedTemplates = Util::allowedThemes(
-            $this->templates->findAll(),
-            $plugin_cf['themeswitcher']['allowed_themes']
-        );
-        return in_array($this->getUserTheme(), $allowedTemplates, true);
-    }
-
-    /**
-     * @return bool
-     */
-    private function hasPageTheme()
-    {
-        global $pd_current;
-
-        return !empty($pd_current['template']);
-    }
-
-    /**
-     * @return bool
-     */
-    private function isPageThemePreferred()
-    {
-        global $plugin_cf;
-
-        return (bool) $plugin_cf['themeswitcher']['prefer_page_theme'];
-    }
-
-    /**
-     * @return string
-     */
-    private function getUserTheme()
-    {
-        if (isset($_GET['themeswitcher_select'])) {
-            return $_GET['themeswitcher_select'];
-        } else {
-            return $_COOKIE['themeswitcher_theme'];
+        if (!$this->isUserThemeAllowed($request)) {
+            return Response::create();
         }
+        if ($request->hasPageTemplate() && $this->conf['prefer_page_theme']) {
+            return Response::create();
+        }
+        $this->templates->switch($request->selectedTemplate());
+        return Response::create()->withThemeCookie($request->selectedTemplate());
+    }
+
+    /**
+     * @return bool
+     */
+    private function isUserThemeAllowed(Request $request)
+    {
+        $allowedTemplates = Util::allowedThemes($this->templates->findAll(), $this->conf['allowed_themes']);
+        return in_array($request->selectedTemplate(), $allowedTemplates, true);
     }
 }

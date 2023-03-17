@@ -22,78 +22,96 @@
 namespace Themeswitcher;
 
 use PHPUnit\Framework\TestCase;
+use Themeswitcher\Infra\Request;
 use Themeswitcher\Infra\Templates;
 
 class SelectThemeCommandTest extends TestCase
 {
-    /** @var SelectThemeCommand */
-    private $subject;
-
     /** @var Templates */
     private $templates;
 
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        global $plugin_cf;
-        $plugin_cf = ["themeswitcher" => ["allowed_themes" => "one"]];
-        $this->templates = $this->createMock(Templates::class);
-        $this->templates->expects($this->any())->method('findAll')
-            ->will($this->returnValue(array('one', 'three', 'two')));
-        $this->subject = new SelectThemeCommand($this->templates);
-    }
-
     public function testSwitchesThemeOnGet(): void
     {
-        $_GET = array('themeswitcher_select' => 'one');
+        $sut = $this->sut();
         $this->templates->expects($this->once())->method('switch')
             ->with($this->equalTo('one'));
-        $this->subject->execute();
+        $sut->execute($this->request());
     }
 
     public function testSwitchesThemeOnCookie(): void
     {
-        $_COOKIE = array('themeswitcher_theme' => 'one');
+        $sut = $this->sut();
         $this->templates->expects($this->once())->method('switch')
             ->with($this->equalTo('one'));
-        $this->subject->execute();
+        $sut->execute($this->request());
+    }
+
+    public function testTemplateIsNotSwitchedIfNotRequested(): void
+    {
+        $sut = $this->sut();
+        $this->templates->expects($this->never())->method("switch");
+        $sut->execute($this->request(["selectedTemplate" => null]));
     }
 
     public function testDontSwitchThemeIfNotAllowed(): void
     {
-        $_GET = array('themeswitcher_select' => 'foo');
+        $sut = $this->sut();
         $this->templates->expects($this->never())->method('switch');
-        $this->subject->execute();
+        $sut->execute($this->request(["selectedTemplate" => "foo"]));
     }
 
     public function testSwitchThemeIfPageThemeIsNotPreferred(): void
     {
-        global $pd_current, $plugin_cf;
+        global $plugin_cf;
 
-        $pd_current = array('template' => 'two');
         $plugin_cf['themeswitcher']['prefer_page_theme'] = '';
-        $_GET = array('themeswitcher_select' => 'one');
+        $sut = $this->sut(["prefer_page_theme" => ""]);
         $this->templates->expects($this->once())->method('switch');
-        $this->subject->execute();
+
+        $sut->execute($this->request(["hasPageTemplate" => true]));
     }
 
     public function testDontSwitchThemeIfPageTemplateIsPreferred(): void
     {
-        global $pd_current, $plugin_cf;
+        global $plugin_cf;
 
-        $pd_current = array('template' => 'two');
         $plugin_cf['themeswitcher']['prefer_page_theme'] = 'true';
-        $_GET = array('themeswitcher_select' => 'one');
+        $sut = $this->sut();
         $this->templates->expects($this->never())->method('switch');
-        $this->subject->execute();
+        $sut->execute($this->request(["hasPageTemplate" => true]));
     }
 
     public function testCookieIsSetOnGet(): void
     {
-        $_GET = array('themeswitcher_select' => 'one');
-        $response = $this->subject->execute();
+        $sut = $this->sut();
+        $response = $sut->execute($this->request());
         $this->assertEquals("one", $response->themeCookie());
+    }
+
+    private function sut(array $opts = [])
+    {
+        $opts += [
+            "prefer_page_theme" => "true",
+        ];
+        $conf = [
+            "allowed_themes" => "one",
+            "prefer_page_theme" => $opts["prefer_page_theme"],
+        ];
+        $this->templates = $this->createMock(Templates::class);
+        $this->templates->expects($this->any())->method('findAll')
+            ->will($this->returnValue(array('one', 'three', 'two')));
+        return new SelectThemeCommand($conf, $this->templates);
+    }
+
+    public function request(array $opts = [])
+    {
+        $opts += [
+            "selectedTemplate" => "one",
+            "hasPageTemplate" => false,
+        ];
+        $request = $this->createMock(Request::class);
+        $request->method("selectedTemplate")->willReturn($opts["selectedTemplate"]);
+        $request->method("hasPageTemplate")->willReturn($opts["hasPageTemplate"]);
+        return $request;
     }
 }
