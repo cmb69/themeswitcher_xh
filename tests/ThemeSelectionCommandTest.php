@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2014-2017 Christoph M. Becker
+ * Copyright (C) 2023 Christoph M. Becker
  *
  * This file is part of Themeswitcher_XH.
  *
@@ -19,17 +19,23 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Themeswitcher\Dic;
+namespace Themeswitcher;
 
-const THEMESWITCHER_VERSION = "1.0beta4";
+use ApprovalTests\Approvals;
+use PHPUnit\Framework\TestCase;
+use Themeswitcher\Infra\View;
 
-/**
- * @return string
- */
-function themeswitcher()
+class ThemeSelectionCommandTest extends TestCase
 {
-    return Dic::makeThemeSelectionCommand()->render();
+    public function testRendersThemeSelector(): void
+    {
+        global $cf;
+        $cf = ["site" => ["template" => "foo_theme"]];
+        $model = $this->createMock(Model::class);
+        $model->method("getThemes")->willReturn(["foo_theme", "bar_template"]);
+        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["themeswitcher"]);
+        $sut = new ThemeSelectionCommand($model, $view);
+        $response = $sut->render();
+        Approvals::verifyHtml($response);
+    }
 }
-
-Dic::makeSelectThemeCommand()->execute();
-Dic::makeThemeSelectionCommand()();

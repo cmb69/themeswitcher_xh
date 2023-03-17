@@ -31,12 +31,24 @@ class ThemeSelectionCommand
      */
     private $model;
 
+    /** @var View */
+    private $view;
+
     /**
      * @return void
      */
-    public function __construct(Model $model)
+    public function __construct(Model $model, View $view)
     {
         $this->model = $model;
+        $this->view = $view;
+    }
+
+    /** @return void */
+    public function __invoke()
+    {
+        if ($this->isAutomatic()) {
+            $this->outputContents($this->render());
+        }
     }
 
     /**
@@ -44,16 +56,47 @@ class ThemeSelectionCommand
      */
     public function render()
     {
-        global $su, $pth, $plugin_tx;
+        global $su;
         static $run = 0;
 
         $run++;
-        $view = new View($pth["folder"]["plugins"] . "themeswitcher/views/", $plugin_tx["themeswitcher"]);
-        return $view->render("form", [
+        return $this->view->render("form", [
             'run' => $run,
             'selected' => $su,
             'themes' => $this->getThemes()
         ]);
+    }
+
+    /**
+     * @return bool
+     */
+    private function isAutomatic()
+    {
+        global $print, $edit, $f, $plugin_cf;
+
+        $mode = $plugin_cf['themeswitcher']['display_automatic'];
+        return ($mode == 'always' || $mode == 'frontend' && !$edit)
+            && !$print && !in_array($f, ['login', 'xh_login_failed', 'forgotten']);
+    }
+
+    /**
+     * @param string $html
+     * @return void
+     */
+    private function outputContents($html)
+    {
+        global $c, $o, $pd_s, $s, $edit, $xh_publisher, $_XH_firstPublishedPage;
+
+        if (isset($xh_publisher)) {
+            $startPage = $xh_publisher->getFirstPublishedPage();
+        } else {
+            $startPage = $_XH_firstPublishedPage;
+        }
+        if ($pd_s === $startPage && $s !== $startPage && !(defined("XH_ADM") && XH_ADM && $edit)) {
+            $c[$pd_s] = $html . $c[$pd_s];
+        } else {
+            $o .= $html;
+        }
     }
 
     /**

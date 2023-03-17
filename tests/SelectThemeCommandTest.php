@@ -21,42 +21,29 @@
 
 namespace Themeswitcher;
 
+use PHPUnit\Framework\TestCase;
+
 class SelectThemeCommandTest extends TestCase
 {
-    /**
-     * @var SelectThemeCommand
-     */
+    /** @var SelectThemeCommand */
     private $subject;
 
-    /**
-     * @var Model
-     */
+    /** @var Model */
     private $model;
-
-    /**
-     * @var FunctionMock
-     */
-    private $setcookie;
 
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
-        if (!defined('CMSIMPLE_ROOT')) {
-            define('CMSIMPLE_ROOT', '/');
-        }
+
         $this->model = $this->createMock('Themeswitcher\Model');
         $this->model->expects($this->any())->method('getThemes')
             ->will($this->returnValue(array('one', 'three', 'two')));
         $this->subject = new SelectThemeCommand($this->model);
-        $this->setcookie = $this->createFunctionMock('setcookie');
     }
 
-    /**
-     * @return void
-     */
-    public function testSwitchesThemeOnGet()
+    public function testSwitchesThemeOnGet(): void
     {
         $_GET = array('themeswitcher_select' => 'one');
         $this->model->expects($this->once())->method('switchTheme')
@@ -64,10 +51,7 @@ class SelectThemeCommandTest extends TestCase
         $this->subject->execute();
     }
 
-    /**
-     * @return void
-     */
-    public function testSwitchesThemeOnCookie()
+    public function testSwitchesThemeOnCookie(): void
     {
         $_COOKIE = array('themeswitcher_theme' => 'one');
         $this->model->expects($this->once())->method('switchTheme')
@@ -75,20 +59,14 @@ class SelectThemeCommandTest extends TestCase
         $this->subject->execute();
     }
 
-    /**
-     * @return void
-     */
-    public function testDontSwitchThemeIfNotAllowed()
+    public function testDontSwitchThemeIfNotAllowed(): void
     {
         $_GET = array('themeswitcher_select' => 'foo');
         $this->model->expects($this->never())->method('switchTheme');
         $this->subject->execute();
     }
 
-    /**
-     * @return void
-     */
-    public function testSwitchThemeIfPageThemeIsNotPreferred()
+    public function testSwitchThemeIfPageThemeIsNotPreferred(): void
     {
         global $pd_current, $plugin_cf;
 
@@ -99,10 +77,7 @@ class SelectThemeCommandTest extends TestCase
         $this->subject->execute();
     }
 
-    /**
-     * @return void
-     */
-    public function testDontSwitchThemeIfPageTemplateIsPreferred()
+    public function testDontSwitchThemeIfPageTemplateIsPreferred(): void
     {
         global $pd_current, $plugin_cf;
 
@@ -113,23 +88,10 @@ class SelectThemeCommandTest extends TestCase
         $this->subject->execute();
     }
 
-    /**
-     * @return void
-     */
-    public function testCookieIsSetOnGet()
+    public function testCookieIsSetOnGet(): void
     {
         $_GET = array('themeswitcher_select' => 'one');
-        $this->setcookie->expects($this->once())->with('themeswitcher_theme', 'one', 0, CMSIMPLE_ROOT);
-        $this->subject->execute();
-    }
-
-    /**
-     * @return void
-     */
-    public function testNoCookieIsSetOnCookie()
-    {
-        $_COOKIE = array('themeswitcher_theme' => 'one');
-        $this->setcookie->expects($this->never());
-        $this->subject->execute();
+        $response = $this->subject->execute();
+        $this->assertEquals("one", $response->themeCookie());
     }
 }

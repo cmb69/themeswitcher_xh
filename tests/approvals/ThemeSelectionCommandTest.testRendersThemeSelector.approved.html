@@ -1,0 +1,12 @@
+<form class="themeswitcher_select_form" method="get">
+    <input type="hidden" name="selected" value="">
+    <label for="themeswitcher_1">Theme</label>
+    <select id="themeswitcher_1" name="themeswitcher_select" onchange="this.form.submit()">
+        <option value="foo_theme" selected>foo_theme</option>
+        <option value="bar_template" >bar_template</option>
+    </select>
+    <button id="themeswitcher_button_1">Activate</button>
+</form>
+<script>
+    document.getElementById("themeswitcher_button_1").style.display = "none";
+</script>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2014-2017 Christoph M. Becker
+ * Copyright (C) 2023 Christoph M. Becker
  *
  * This file is part of Themeswitcher_XH.
  *
@@ -19,35 +19,37 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Themeswitcher;
+namespace Themeswitcher\Value;
 
-class CommandFactory
+class Response
 {
-    /**
-     * @return ThemeSelectionCommand
-     */
-    public function makeThemeSelectionCommand()
+    public static function create(string $output = ""): self
     {
-        return new ThemeSelectionCommand(
-            new Model()
-        );
+        $that = new self;
+        $that->output = $output;
+        return $that;
     }
 
-    /**
-     * @return SelectThemeCommand
-     */
-    public function makeSelectThemeCommand()
+    /** @var string */
+    private $output;
+
+    /** @var string|null */
+    private $themeCookie = null;
+
+    public function withThemeCookie(string $themeCookie): self
     {
-        return new SelectThemeCommand(
-            new Model()
-        );
+        $that = clone $this;
+        $that->themeCookie = $themeCookie;
+        return $that;
     }
 
-    /**
-     * @return InfoCommand
-     */
-    public function makeInfoCommand()
+    public function output(): string
     {
-        return new InfoCommand();
+        return $this->output;
+    }
+
+    public function themeCookie(): ?string
+    {
+        return $this->themeCookie;
     }
 }

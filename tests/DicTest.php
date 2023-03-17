@@ -23,48 +23,27 @@ namespace Themeswitcher;
 
 use PHPUnit\Framework\TestCase;
 
-class CommandFactoryTest extends TestCase
+class DicTest extends TestCase
 {
-    /**
-     * @var CommandFactory
-     */
-    private $subject;
-
     public function setUp(): void
     {
-        $this->subject = new CommandFactory();
+        global $pth, $plugin_tx;
+        $pth = ["folder" => ["plugins" => ""]];
+        $plugin_tx = ["themeswitcher" => []];
     }
 
-    /**
-     * @return void
-     */
-    public function testMakeThemeSelectionCommand()
+    public function testMakeThemeSelectionCommand(): void
     {
-        $this->assertInstanceOf(
-            'Themeswitcher\ThemeSelectionCommand',
-            $this->subject->makeThemeSelectionCommand()
-        );
+        $this->assertInstanceOf(ThemeSelectionCommand::class, Dic::makeThemeSelectionCommand());
     }
 
-    /**
-     * @return void
-     */
-    public function testMakeSelectThemeCommand()
+    public function testMakeSelectThemeCommand(): void
     {
-        $this->assertInstanceOf(
-            'Themeswitcher\SelectThemeCommand',
-            $this->subject->makeSelectThemeCommand()
-        );
+        $this->assertInstanceOf(SelectThemeCommand::class, Dic::makeSelectThemeCommand());
     }
 
-    /**
-     * @return void
-     */
-    public function testMakeInfoCommand()
+    public function testMakeInfoCommand(): void
     {
-        $this->assertInstanceOf(
-            'Themeswitcher\InfoCommand',
-            $this->subject->makeInfoCommand()
-        );
+        $this->assertInstanceOf(InfoCommand::class, Dic::makeInfoCommand());
     }
 }

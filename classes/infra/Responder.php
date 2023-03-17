@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2014-2017 Christoph M. Becker
+ * Copyright (C) 2023 Christoph M. Becker
  *
  * This file is part of Themeswitcher_XH.
  *
@@ -19,17 +19,17 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Themeswitcher\Dic;
+namespace Themeswitcher\Infra;
 
-const THEMESWITCHER_VERSION = "1.0beta4";
+use Themeswitcher\Value\Response;
 
-/**
- * @return string
- */
-function themeswitcher()
+class Responder
 {
-    return Dic::makeThemeSelectionCommand()->render();
+    public static function respond(Response $response): string
+    {
+        if ($response->themeCookie() !== null) {
+            setcookie('themeswitcher_theme', $response->themeCookie(), 0, CMSIMPLE_ROOT);
+        }
+        return $response->output();
+    }
 }
-
-Dic::makeSelectThemeCommand()->execute();
-Dic::makeThemeSelectionCommand()();

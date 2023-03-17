@@ -21,22 +21,34 @@
 
 namespace Themeswitcher;
 
-use Themeswitcher\Infra\View;
 use stdClass;
+use Themeswitcher\Infra\SystemChecker;
+use Themeswitcher\Infra\View;
 
 class InfoCommand
 {
+    /** @var SystemChecker */
+    private $systemChecker;
+
+    /** @var View */
+    private $view;
+
+    public function __construct(SystemChecker $systemChecker, View $view)
+    {
+        $this->systemChecker = $systemChecker;
+        $this->view = $view;
+    }
+
     /**
      * @return string
      */
     public function render()
     {
-        global $pth, $plugin_tx;
+        global $pth;
 
-        $view = new View($pth["folder"]["plugins"] . "themeswitcher/views/", $plugin_tx["themeswitcher"]);
-        return $view->render("info", [
+        return $this->view->render("info", [
             'logo' => "{$pth['folder']['plugins']}themeswitcher/themeswitcher.png",
-            'version' => Plugin::VERSION,
+            'version' => THEMESWITCHER_VERSION,
             'checks' => $this->checks()
         ]);
     }
@@ -57,7 +69,7 @@ class InfoCommand
     private function checkPhpVersion(string $version): stdClass
     {
         global $plugin_tx;
-        $state = version_compare(PHP_VERSION, $version, "ge") ? "success" : "fail";
+        $state = $this->systemChecker->checkVersion(PHP_VERSION, $version) ? "success" : "fail";
         return (object) [
             "state" => $state,
             "label" => sprintf($plugin_tx["themeswitcher"]["syscheck_phpversion"], $version),
@@ -68,7 +80,7 @@ class InfoCommand
     private function checkXhVersion(string $version): stdClass
     {
         global $plugin_tx;
-        $state = version_compare(CMSIMPLE_XH_VERSION, "CMSimple_XH $version", "ge") ? "success" : "fail";
+        $state = $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $version") ? "success" : "fail";
         return (object) [
             "state" => $state,
             "label" => sprintf($plugin_tx["themeswitcher"]["syscheck_xhversion"], $version),
@@ -79,7 +91,7 @@ class InfoCommand
     private function checkWritability(string $folder): stdClass
     {
         global $plugin_tx;
-        $state = is_writable($folder) ? "success" : "fail";
+        $state = $this->systemChecker->checkWritability($folder) ? "success" : "warning";
         return (object) [
             "state" => $state,
             "label" => sprintf($plugin_tx["themeswitcher"]["syscheck_writable"], $folder),

@@ -21,6 +21,8 @@
 
 namespace Themeswitcher;
 
+use Themeswitcher\Value\Response;
+
 class SelectThemeCommand
 {
     /**
@@ -36,17 +38,17 @@ class SelectThemeCommand
         $this->model = $model;
     }
 
-    /**
-     * @return void
-     */
-    public function execute()
+    public function execute(): Response
     {
-        if ($this->isUserThemeAllowed()
-            && (!$this->hasPageTheme() || !$this->isPageThemePreferred())
-        ) {
-            $this->model->switchTheme($this->getUserTheme());
-            $this->setThemeCookie();
+        if (isset($_GET['themeswitcher_select']) || isset($_COOKIE['themeswitcher_theme'])) {
+            if ($this->isUserThemeAllowed()
+                && (!$this->hasPageTheme() || !$this->isPageThemePreferred())
+            ) {
+                $this->model->switchTheme($this->getUserTheme());
+                return Response::create()->withThemeCookie($this->getUserTheme());
+            }
         }
+        return Response::create();
     }
 
     /**
@@ -86,16 +88,6 @@ class SelectThemeCommand
             return $_GET['themeswitcher_select'];
         } else {
             return $_COOKIE['themeswitcher_theme'];
-        }
-    }
-
-    /**
-     * @return void
-     */
-    private function setThemeCookie()
-    {
-        if (isset($_GET['themeswitcher_select'])) {
-            setcookie('themeswitcher_theme', $this->getUserTheme(), 0, CMSIMPLE_ROOT);
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2014-2017 Christoph M. Becker
+ * Copyright (C) 2023 Christoph M. Becker
  *
  * This file is part of Themeswitcher_XH.
  *
@@ -19,17 +19,18 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Themeswitcher\Dic;
+namespace Themeswitcher\Infra;
 
-const THEMESWITCHER_VERSION = "1.0beta4";
-
-/**
- * @return string
- */
-function themeswitcher()
+/** @codeCoverageIgnore */
+class SystemChecker
 {
-    return Dic::makeThemeSelectionCommand()->render();
-}
+    public function checkVersion(string $actual, string $minimum): bool
+    {
+        return version_compare($actual, $minimum) >= 0;
+    }
 
-Dic::makeSelectThemeCommand()->execute();
-Dic::makeThemeSelectionCommand()();
+    public function checkWritability(string $path): bool
+    {
+        return is_writable($path);
+    }
+}
