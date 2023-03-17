@@ -21,77 +21,61 @@
 
 namespace Themeswitcher;
 
-use stdClass;
+use Themeswitcher\Infra\Request;
 use Themeswitcher\Infra\Templates;
 use Themeswitcher\Infra\View;
 use Themeswitcher\Logic\Util;
 
 class ThemeSelectionCommand
 {
+    /** @var array<string,string> */
+    private $conf;
+
     /** @var Templates */
     private $templates;
 
     /** @var View */
     private $view;
 
-    /**
-     * @return void
-     */
-    public function __construct(Templates $templates, View $view)
+    /** @param array<string,string> $conf */
+    public function __construct(array $conf, Templates $templates, View $view)
     {
+        $this->conf = $conf;
         $this->templates = $templates;
         $this->view = $view;
     }
 
     /** @return void */
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         if ($this->isAutomatic()) {
-            $this->outputContents($this->render());
+            $this->outputContents($this->render($request));
         }
     }
 
-    /**
-     * @return string
-     */
-    public function render()
+    public function render(Request $request): string
     {
-        global $su;
-        static $run = 0;
-
-        $run++;
         return $this->view->render("form", [
-            'run' => $run,
-            'selected' => $su,
-            'themes' => $this->getThemes()
+            'selected' => $request->su(),
+            'themes' => $this->templateRecords($request)
         ]);
     }
 
-    /**
-     * @return bool
-     */
-    private function isAutomatic()
+    private function isAutomatic(): bool
     {
-        global $print, $edit, $f, $plugin_cf;
+        global $print, $edit, $f;
 
-        $mode = $plugin_cf['themeswitcher']['display_automatic'];
+        $mode = $this->conf['display_automatic'];
         return ($mode == 'always' || $mode == 'frontend' && !$edit)
             && !$print && !in_array($f, ['login', 'xh_login_failed', 'forgotten']);
     }
 
-    /**
-     * @param string $html
-     * @return void
-     */
-    private function outputContents($html)
+    /** @return void */
+    private function outputContents(string $html)
     {
-        global $c, $o, $pd_s, $s, $edit, $xh_publisher, $_XH_firstPublishedPage;
+        global $c, $o, $pd_s, $s, $edit, $xh_publisher;
 
-        if (isset($xh_publisher)) {
-            $startPage = $xh_publisher->getFirstPublishedPage();
-        } else {
-            $startPage = $_XH_firstPublishedPage;
-        }
+        $startPage = $xh_publisher->getFirstPublishedPage();
         if ($pd_s === $startPage && $s !== $startPage && !(defined("XH_ADM") && XH_ADM && $edit)) {
             $c[$pd_s] = $html . $c[$pd_s];
         } else {
@@ -99,39 +83,25 @@ class ThemeSelectionCommand
         }
     }
 
-    /**
-     * @return stdClass[]
-     */
-    private function getThemes()
+    /** @return list<array{name:string,selected:string}> */
+    private function templateRecords(Request $request): array
     {
-        global $plugin_cf;
-        $allowedTemplates = Util::allowedThemes(
-            $this->templates->findAll(),
-            $plugin_cf['themeswitcher']['allowed_themes']
-        );
+        $allowedTemplates = Util::allowedThemes($this->templates->findAll(), $this->conf['allowed_themes']);
         $themes = [];
         foreach ($allowedTemplates as $name) {
-            $themes[] = (object) array(
+            $themes[] = [
                 'name' => $name,
-                'selected' => $name === $this->getCurrentTheme() ? 'selected' : ''
-            );
+                'selected' => $name === $this->getCurrentTheme($request) ? 'selected' : ''
+            ];
         }
         return $themes;
     }
 
-    /**
-     * @return string
-     */
-    private function getCurrentTheme()
+    private function getCurrentTheme(Request $request): string
     {
-        global $cf;
-
-        if (isset($_GET['themeswitcher_select'])) {
-            return $_GET['themeswitcher_select'];
-        } elseif (isset($_COOKIE['themeswitcher_theme'])) {
-            return $_COOKIE['themeswitcher_theme'];
-        } else {
-            return $cf['site']['template'];
+        if ($request->selectedTemplate() !== null) {
+            return $request->selectedTemplate();
         }
+        return $this->conf["site_template"];
     }
 }

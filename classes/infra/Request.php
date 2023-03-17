@@ -30,6 +30,13 @@ class Request
     }
 
     /** @codeCoverageIgnore */
+    public function su(): string
+    {
+        global $su;
+        return $su;
+    }
+
+    /** @codeCoverageIgnore */
     public function selectedTemplate(): ?string
     {
         return $_GET["themeswitcher_select"] ?? $_COOKIE["themeswitcher_theme"] ?? null;

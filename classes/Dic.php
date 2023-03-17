@@ -29,7 +29,9 @@ class Dic
 {
     public static function makeThemeSelectionCommand(): ThemeSelectionCommand
     {
+        global $cf, $plugin_cf;
         return new ThemeSelectionCommand(
+            ["site_template" => $cf["site"]["template"]] + $plugin_cf["themeswitcher"],
             new Templates(),
             self::makeView()
         );

@@ -29,8 +29,8 @@ const THEMESWITCHER_VERSION = "1.0beta4";
  */
 function themeswitcher()
 {
-    return Dic::makeThemeSelectionCommand()->render();
+    return Dic::makeThemeSelectionCommand()->render(Request::current());
 }
 
 Dic::makeSelectThemeCommand()->execute(Request::current());
-Dic::makeThemeSelectionCommand()();
+Dic::makeThemeSelectionCommand()(Request::current());
