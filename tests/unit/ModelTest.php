@@ -38,10 +38,7 @@ class ModelTest extends TestCase
      */
     private $themeFolder;
 
-    /**
-     * @return void
-     */
-    public function setUp()
+    public function setUp(): void
     {
         global $pth, $plugin_cf;
 

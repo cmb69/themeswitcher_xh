@@ -3,3 +3,4 @@ vendor
 /classes.svg
 /README.htm
 /composer.lock
+/.phpunit.result.cache

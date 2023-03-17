@@ -30,10 +30,7 @@ class CommandFactoryTest extends TestCase
      */
     private $subject;
 
-    /**
-     * @return void
-     */
-    public function setUp()
+    public function setUp(): void
     {
         $this->subject = new CommandFactory();
     }
