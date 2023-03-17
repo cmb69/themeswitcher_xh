@@ -1,16 +1,17 @@
+<!-- themeswitcher selector -->
 <form class="themeswitcher_select_form " method="get">
-    <input type="hidden" name="selected" value="">
-    <label>
-        <span>Theme</span>
-        <select name="themeswitcher_select" onchange="this.form.submit()">
-            <option value="foo_theme" selected>foo_theme</option>
-            <option value="bar_template" >bar_template</option>
-        </select>
-    </label>
-    <button class="themeswitcher_button">Activate</button>
+  <input type="hidden" name="selected" value="">
+  <label>
+    <span>Theme</span>
+    <select name="themeswitcher_select" onchange="this.form.submit()">
+      <option value="foo_theme" selected>foo_theme</option>
+      <option value="bar_template" >bar_template</option>
+    </select>
+  </label>
+  <button class="themeswitcher_button">Activate</button>
 </form>
 <script>
-    Array.prototype.forEach.call(document.getElementsByClassName("themeswitcher_button"), function (button) {
-        button.style.display = "none";
-    });
+  Array.prototype.forEach.call(document.getElementsByClassName("themeswitcher_button"), function (button) {
+    button.style.display = "none";
+  });
 </script>
