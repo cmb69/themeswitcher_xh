@@ -2,16 +2,14 @@
 
 $plugin_tx['themeswitcher']['label_theme']="Theme";
 $plugin_tx['themeswitcher']['label_activate']="Activate";
-$plugin_tx['themeswitcher']['alt_logo']="Stylized themes";
 
 $plugin_tx['themeswitcher']['syscheck_fail']="failure";
-$plugin_tx['themeswitcher']['syscheck_message']="Checking that %1\$s … %2\$s";
-$plugin_tx['themeswitcher']['syscheck_phpversion']="the PHP version is at least %s";
+$plugin_tx['themeswitcher']['syscheck_phpversion']="PHP version is at least %s: ";
 $plugin_tx['themeswitcher']['syscheck_success']="okay";
 $plugin_tx['themeswitcher']['syscheck_title']="System check";
 $plugin_tx['themeswitcher']['syscheck_warning']="warning";
-$plugin_tx['themeswitcher']['syscheck_writable']="'%s' is writable";
-$plugin_tx['themeswitcher']['syscheck_xhversion']="the CMSimple_XH version is at least %s";
+$plugin_tx['themeswitcher']['syscheck_writable']="'%s' is writable: ";
+$plugin_tx['themeswitcher']['syscheck_xhversion']="CMSimple_XH version is at least %s: ";
 
 $plugin_tx['themeswitcher']['cf_prefer_page_theme']="Whether page themes are preferred over the user selection.";
 $plugin_tx['themeswitcher']['cf_display_automatic']="When the theme selector is automatically displayed: \"never\" (never), \"frontend\" (only in the front-end and view mode), \"always\" (always, except in print view).";

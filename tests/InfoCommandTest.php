@@ -30,14 +30,11 @@ class InfoCommandTest extends TestCase
 {
     public function testRendersPluginInfo(): void
     {
-        global $pth, $plugin_tx;
-        $pth = ["folder" => ["plugins" => "./plugins/"]];
-        $plugin_tx = XH_includeVar("./languages/en.php", "plugin_tx");
         $systemChecker = $this->createMock(SystemChecker::class);
         $systemChecker->method("checkVersion")->willReturn(false);
         $systemChecker->method("checkWritability")->willReturn(false);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["themeswitcher"]);
-        $sut = new InfoCommand($systemChecker, $view);
+        $sut = new InfoCommand("./plugins/themeswitcher/", $systemChecker, $view);
         $response = $sut->render();
         Approvals::verifyHtml($response);
     }

@@ -21,20 +21,23 @@
 
 namespace Themeswitcher;
 
-use stdClass;
 use Themeswitcher\Infra\SystemChecker;
 use Themeswitcher\Infra\View;
 
 class InfoCommand
 {
+    /** @var string */
+    private $pluginFolder;
+
     /** @var SystemChecker */
     private $systemChecker;
 
     /** @var View */
     private $view;
 
-    public function __construct(SystemChecker $systemChecker, View $view)
+    public function __construct(string $pluginFolder, SystemChecker $systemChecker, View $view)
     {
+        $this->pluginFolder = $pluginFolder;
         $this->systemChecker = $systemChecker;
         $this->view = $view;
     }
@@ -44,58 +47,51 @@ class InfoCommand
      */
     public function render()
     {
-        global $pth;
-
         return $this->view->render("info", [
-            'logo' => "{$pth['folder']['plugins']}themeswitcher/themeswitcher.png",
             'version' => THEMESWITCHER_VERSION,
-            'checks' => $this->checks()
+            'checks' => [
+                $this->checkPhpVersion("5.4.0"),
+                $this->checkXhVersion("1.6.3"),
+                $this->checkWritability($this->pluginFolder . "config/"),
+                $this->checkWritability($this->pluginFolder . "css/"),
+                $this->checkWritability($this->pluginFolder . "languages/"),
+            ]
         ]);
     }
 
-    /** @return list<stdClass> */
-    private function checks(): array
+    /** @return array{class:string,key:string,arg:string,statekey:string} */
+    private function checkPhpVersion(string $version): array
     {
-        global $pth;
-        return [
-            $this->checkPhpVersion("5.4.0"),
-            $this->checkXhVersion("1.6.3"),
-            $this->checkWritability($pth["folder"]["plugins"] . "themeswitcher/config/"),
-            $this->checkWritability($pth["folder"]["plugins"] . "themeswitcher/css/"),
-            $this->checkWritability($pth["folder"]["plugins"] . "themeswitcher/languages/"),
-        ];
-    }
-
-    private function checkPhpVersion(string $version): stdClass
-    {
-        global $plugin_tx;
         $state = $this->systemChecker->checkVersion(PHP_VERSION, $version) ? "success" : "fail";
-        return (object) [
-            "state" => $state,
-            "label" => sprintf($plugin_tx["themeswitcher"]["syscheck_phpversion"], $version),
-            "stateLabel" => $plugin_tx["themeswitcher"]["syscheck_$state"],
+        return [
+            "class" => "xh_$state",
+            "key" => "syscheck_phpversion",
+            "arg" => $version,
+            "statekey" => "syscheck_$state",
         ];
     }
 
-    private function checkXhVersion(string $version): stdClass
+    /** @return array{class:string,key:string,arg:string,statekey:string} */
+    private function checkXhVersion(string $version): array
     {
-        global $plugin_tx;
         $state = $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $version") ? "success" : "fail";
-        return (object) [
-            "state" => $state,
-            "label" => sprintf($plugin_tx["themeswitcher"]["syscheck_xhversion"], $version),
-            "stateLabel" => $plugin_tx["themeswitcher"]["syscheck_$state"],
+        return [
+            "class" => "xh_$state",
+            "key" => "syscheck_xhversion",
+            "arg" => $version,
+            "statekey" => "syscheck_$state",
         ];
     }
 
-    private function checkWritability(string $folder): stdClass
+    /** @return array{class:string,key:string,arg:string,statekey:string} */
+    private function checkWritability(string $folder): array
     {
-        global $plugin_tx;
         $state = $this->systemChecker->checkWritability($folder) ? "success" : "warning";
-        return (object) [
-            "state" => $state,
-            "label" => sprintf($plugin_tx["themeswitcher"]["syscheck_writable"], $folder),
-            "stateLabel" => $plugin_tx["themeswitcher"]["syscheck_$state"],
+        return [
+            "class" => "xh_$state",
+            "key" => "syscheck_writable",
+            "arg" => $folder,
+            "statekey" => "syscheck_$state",
         ];
     }
 }

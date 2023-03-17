@@ -44,7 +44,8 @@ class Dic
 
     public static function makeInfoCommand(): InfoCommand
     {
-        return new InfoCommand(new SystemChecker, self::makeView());
+        global $pth;
+        return new InfoCommand($pth["folder"]["plugins"] . "themeswitcher/", new SystemChecker, self::makeView());
     }
 
     private static function makeView(): View
