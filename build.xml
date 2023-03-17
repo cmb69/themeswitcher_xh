@@ -2,14 +2,6 @@
 
 <project name="Themeswitcher" default="help">
 
-  <fileset id="php-sources" dir=".">
-    <include name="classes/*.php"/>
-  </fileset>
-
-  <fileset id="unit-tests" dir="tests/unit">
-    <include name="*Test.php"/>
-  </fileset>
-
   <target name="help" description="lists available targets">
     <exec command="phing -l" outputProperty="help"/>
     <echo>${help}</echo>
@@ -30,6 +22,8 @@
       <arg line="--ansi analyze"/>
     </exec>
   </target>
+
+  <target name="check" description="runs all checks" depends="sniff,stan,unit-tests"/>
 
   <target name="coverage" description="generates coverage report">
     <exec executable="phpunit" passthru="true" checkreturn="true">
