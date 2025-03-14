@@ -5,6 +5,7 @@ $plugin_tx['themeswitcher']['label_activate']="Aktivieren";
 
 $plugin_tx['themeswitcher']['syscheck_fail']="Fehlschlag";
 $plugin_tx['themeswitcher']['syscheck_phpversion']="PHP-Version ist mindestens %s: ";
+$plugin_tx['themeswitcher']['syscheck_plibversion']="die Plib_XH-Version ist mindestens %s: ";
 $plugin_tx['themeswitcher']['syscheck_success']="Okay";
 $plugin_tx['themeswitcher']['syscheck_title']="System-Prüfung";
 $plugin_tx['themeswitcher']['syscheck_warning']="Warnung";
