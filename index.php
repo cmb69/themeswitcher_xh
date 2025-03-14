@@ -19,8 +19,8 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Plib\Request;
 use Themeswitcher\Dic;
-use Themeswitcher\Infra\Request;
 
 const THEMESWITCHER_VERSION = "1.0beta4";
 

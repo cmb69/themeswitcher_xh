@@ -21,8 +21,8 @@
 
 namespace Themeswitcher;
 
+use Plib\Request;
 use Plib\Response;
-use Themeswitcher\Infra\Request;
 use Themeswitcher\Infra\Templates;
 use Themeswitcher\Logic\Util;
 
@@ -44,7 +44,8 @@ class SelectThemeCommand
     /** @param array<string,string> $pageData */
     public function execute(Request $request, array $pageData): Response
     {
-        if ($request->selectedTemplate() === null) {
+        $selectedTemplate = $request->get("themeswitcher_select") ?? $request->cookie("themeswitcher_theme");
+        if ($selectedTemplate === null) {
             return Response::create();
         }
         if (!$this->isUserThemeAllowed($request)) {
@@ -53,8 +54,8 @@ class SelectThemeCommand
         if (!empty($pageData["template"]) && $this->conf['prefer_page_theme']) {
             return Response::create();
         }
-        $this->templates->switch($request->selectedTemplate());
-        return Response::create()->withCookie("themeswitcher_theme", $request->selectedTemplate(), 0);
+        $this->templates->switch($selectedTemplate);
+        return Response::create()->withCookie("themeswitcher_theme", $selectedTemplate, 0);
     }
 
     /**
@@ -62,7 +63,8 @@ class SelectThemeCommand
      */
     private function isUserThemeAllowed(Request $request)
     {
+        $selectedTemplate = $request->get("themeswitcher_select") ?? $request->cookie("themeswitcher_theme");
         $allowedTemplates = Util::allowedThemes($this->templates->findAll(), $this->conf['allowed_themes']);
-        return in_array($request->selectedTemplate(), $allowedTemplates, true);
+        return in_array($selectedTemplate, $allowedTemplates, true);
     }
 }

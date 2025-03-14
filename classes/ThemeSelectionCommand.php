@@ -21,9 +21,9 @@
 
 namespace Themeswitcher;
 
+use Plib\Request;
 use Plib\Response;
 use Plib\View;
-use Themeswitcher\Infra\Request;
 use Themeswitcher\Infra\Templates;
 use Themeswitcher\Logic\Util;
 
@@ -61,7 +61,7 @@ class ThemeSelectionCommand
     {
         return $this->view->render("form", [
             "class" => $automatic ? "themeswitcher_automatic" : "",
-            'selected' => $request->su(),
+            'selected' => $request->selected(),
             'themes' => $this->templateRecords($request)
         ]);
     }
@@ -89,8 +89,9 @@ class ThemeSelectionCommand
 
     private function getCurrentTheme(Request $request): string
     {
-        if ($request->selectedTemplate() !== null) {
-            return $request->selectedTemplate();
+        $selectedTemplate = $request->get("themeswitcher_select") ?? $request->cookie("themeswitcher_theme");
+        if ($selectedTemplate !== null) {
+            return $selectedTemplate;
         }
         return $this->conf["site_template"];
     }
