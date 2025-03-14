@@ -19,9 +19,9 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Themeswitcher\Dic;
+ use Plib\Response;
+ use Themeswitcher\Dic;
 use Themeswitcher\Infra\Request;
-use Themeswitcher\Infra\Responder;
 
 const THEMESWITCHER_VERSION = "1.0beta4";
 
@@ -30,8 +30,8 @@ const THEMESWITCHER_VERSION = "1.0beta4";
  */
 function themeswitcher()
 {
-    return Responder::respond(Dic::makeThemeSelectionCommand()(Request::current()));
+    return Dic::makeThemeSelectionCommand()(Request::current())();
 }
 
 Dic::makeSelectThemeCommand()->execute(Request::current());
-Responder::respond(Dic::makeThemeSelectionCommand()(Request::current(), true));
+Dic::makeThemeSelectionCommand()(Request::current(), true)();

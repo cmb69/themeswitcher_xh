@@ -66,7 +66,7 @@ class SelectThemeCommandTest extends TestCase
     {
         $sut = $this->sut();
         $response = $sut->execute($this->request());
-        $this->assertEquals("one", $response->themeCookie());
+        $this->assertSame(["themeswitcher_theme", "one", 0], $response->cookie());
     }
 
     private function sut(array $opts = [])

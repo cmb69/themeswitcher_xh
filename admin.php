@@ -19,8 +19,8 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Themeswitcher\Dic;
-use Themeswitcher\Infra\Responder;
+ use Plib\Response;
+ use Themeswitcher\Dic;
 
 /**
  * @var string $admin
@@ -33,7 +33,7 @@ if (XH_wantsPluginAdministration("themeswitcher")) {
     $o .= print_plugin_admin("off");
     switch ($admin) {
         case "":
-            $o .= Responder::respond(Dic::makePluginInfo()());
+            $o .= Dic::makePluginInfo()()();
             break;
         default:
             $o .= plugin_admin_common();

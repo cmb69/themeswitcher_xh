@@ -21,9 +21,9 @@
 
 namespace Themeswitcher;
 
+use Plib\Response;
 use Plib\SystemChecker;
 use Plib\View;
-use Themeswitcher\Value\Response;
 
 class PluginInfo
 {

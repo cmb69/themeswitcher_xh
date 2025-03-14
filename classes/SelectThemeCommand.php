@@ -21,10 +21,10 @@
 
 namespace Themeswitcher;
 
+use Plib\Response;
 use Themeswitcher\Infra\Request;
 use Themeswitcher\Infra\Templates;
 use Themeswitcher\Logic\Util;
-use Themeswitcher\Value\Response;
 
 class SelectThemeCommand
 {
@@ -53,7 +53,7 @@ class SelectThemeCommand
             return Response::create();
         }
         $this->templates->switch($request->selectedTemplate());
-        return Response::create()->withThemeCookie($request->selectedTemplate());
+        return Response::create()->withCookie("themeswitcher_theme", $request->selectedTemplate(), 0);
     }
 
     /**
