@@ -1,40 +1,128 @@
-Themeswitcher_XH
-================
+# Themeswitcher_XH
 
-English
--------
+Themeswitcher_XH facilitates to display widgets that allow your visitors to
+select one of the available themes (aka. templates). This is especially
+useful for demonstration purposes, but might also be appropriate for normal
+websites, in particular, if you are using a fancy template which might have
+accessibility or usability issues.
 
-Themeswitcher_XH is a plugin for [CMSimple_XH](http://www.cmsimple-xh.org/) which facilitates to display widgets that allow your visitors to select one of the available themes (aka. templates).
+- [Requirements](#requirements)
+- [Download](#download)
+- [Installation](#installation)
+- [Settings](#settings)
+- [Usage](#usage)
+- [Limitations](#limitations)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
+- [Credits](#credits)
 
-[![Latest Version: 1.0beta4](https://img.shields.io/badge/Latest%20Version-1.0beta4-red.svg)](https://github.com/cmb69/themeswitcher_xh/releases/tag/1.0beta4)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+## Requirements
 
-* For general **information** and **downloads** of the latest version visit the [project page](http://3-magi.net/?CMSimple_XH/Themeswitcher_XH).
-* For **installation** and **usage** information consult the [user manual](https://htmlpreview.github.io/?https://github.com/cmb69/themeswitcher_xh/blob/master/help/help.htm).
-* The **source code** is hosted on [Github](https://github.com/cmb69/themeswitcher_xh).
-* You have **translated** the language files and/or the user manual to another language?  Please submit a respective [pull request](https://github.com/cmb69/themeswitcher_xh/compare) or send me the file(s) via [email](mailto:cmbecker69@gmx.de).
-* You have found a **vulnerability**?  Please send a private report via [email](mailto:cmbecker69@gmx.de).
-* You have found a not security related **bug**?  File a bug report on [Github](https://github.com/cmb69/themeswitcher_xh/issues/new?labels=bug) or in the [CMSimple_XH Forum](https://cmsimpleforum.com/) (please provide a good description!)
-* You have an idea how to **improve** the plugin?  Suggest an enhancement on [Github](https://github.com/cmb69/themeswitcher_xh/issues/new?labels=enhancement) or in the [CMSimple_XH Forum](https://cmsimpleforum.com/).
-* **You are stuck**?  Ask for support on [Github](https://github.com/cmb69/themeswitcher_xh/issues/new?labels=question) or in the [CMSimple_XH Forum](https://cmsimpleforum.com/).
+Themeswitcher_XH is a plugin for [CMSimple_XH](https://www.cmsimple-xh.org/).
+It requires CMSimple_XH ≥ 1.7.0 and PHP ≥ 7.1.0.
 
-Enjoy!
+## Download
 
-Deutsch
--------
+The [lastest release](https://github.com/cmb69/themeswitcher_xh/releases/latest)
+is available for download on Github.
 
-Themeswitcher_XH ist ein Plugin für [CMSimple_XH](http://www.cmsimple-xh.org/de/), das die Anzeige von Widgets, die es Ihren Besuchern erlauben eines der verfügbaren Themes (alias Templates) auszuwählen, ermöglicht.
+# Installation
 
-[![Aktuelle Version: 1.0beta4](https://img.shields.io/badge/Aktuelle%20Version-1.0beta4-red.svg)](https://github.com/cmb69/themeswitcher_xh/releases/tag/1.0beta4)
-[![Lizenz: GPL v3](https://img.shields.io/badge/Lizenz-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+The installation is done as with many other CMSimple_XH plugins.
 
-* Für allgemeine **Information** und **Downloads** der aktuellen Version besuche die [Projektseite](http://3-magi.net/de/?CMSimple_XH/Themeswitcher_XH).
-* Informationen zu **Installation** und **Verwendung** findest du im [Handbuch](https://htmlpreview.github.io/?https://github.com/cmb69/themeswitcher_xh/blob/master/help/help_de.htm).
-* Der **Quellcode** wird auf [Github](https://github.com/cmb69/themeswitcher_xh) gehostet.
-* Du hast die Sprachdatei und/oder das Handbuch in eine andere Sprache **übersetzt**? Bitte reiche einen entsprechenden [Pull-Request](https://github.com/cmb69/themeswitcher_xh/compare) ein oder schicke mir die Datei(en) per [E-Mail](mailto:cmbecker69@gmx.de).
-* Du hast eine **Sicherheitslücke** gefunden? Bitte melde diese per [E-Mail](mailto:cmbecker69@gmx.de).
-* Du hast einen nicht sicherheitsrelevanten **Fehler** gefunden? Melde diesen auf [Github](https://github.com/cmb69/themeswitcher_xh/issues/new?labels=bug) oder im [CMSimple_XH Forum](https://cmsimpleforum.com/) (bitte liefere eine gute Beschreibung!)
-* Du hast eine Idee wie das Plugin **verbessert** werden könnte? Schlage die Verbesserung auf [Github](https://github.com/cmb69/themeswitcher_xh/issues/new?labels=enhancement) oder im [CMSimple_XH Forum](https://cmsimpleforum.com/) vor.
-* **Du kommst nicht weiter**?  Frage nach Unterstützung auf [Github](https://github.com/cmb69/themeswitcher_xh/issues/new?labels=question) oder im [CMSimple_XH Forum](https://cmsimpleforum.com/).
+1. Backup the data on your server.
+1. Unzip the distribution on your computer.
+1. Upload the whole directory `themeswitcher/` to your server into
+   the `plugins/` directory of CMSimple_XH.
+1. Set write permissions for the subdirectories `config/`, `css/` and `languages/`.
+1. Navigate to `Plugins` → `Themeswitcher` in the back-end to check
+   if all requirements are fulfilled.
 
-Viel Spaß!
+## Settings
+
+
+The configuration of the plugin is done as with many other CMSimple_XH plugins
+in the back-end of the Website. Go to `Plugins` → `Themeswitcher`.
+
+
+You can change the default settings of Themeswitcher_XH under `Config`.
+Hints for the options will be displayed when hovering over the help icon
+with your mouse.
+
+Localization is done under `Language`. You can translate the character
+strings to your own language if there is no appropriate language file
+available, or customize them according to your needs.
+
+
+The look of Themeswitcher_XH can be customized under `Stylesheet`.
+
+## Usage
+
+You can manually embed theme switcher widgets either in the template:
+
+    <?=themeswitcher()?>
+
+or on individual pages:
+
+    {{{themeswitcher()}}}
+
+This enables your visitors to choose their preferred theme.
+This choice is stored in a cookie, so the selected theme
+stays available for the rest of the browser session.
+You can configure whether page specific templates
+(defined via `page_params`) override the user selection or not.
+
+If you have many templates to choose from, and you want to make a theme
+switcher available on all pages, you can set the respective configuration
+option. Then the widget will be output at the bottom of the template; the
+default style rules will position it at the bottom left of the viewport.
+
+
+It is not strictly necessary to show a theme switcher widget to visitors.
+Instead you can present them one or more links so they can choose the
+template. Use the theme switcher widget to see how the URL of these links
+should look like.
+
+## Limitations
+
+Since CMSimple_XH 1.6 page specific templates are enabled also for subpages
+(unless explicitly overridden). However, this is not catered to by
+Themeswitcher_XH.
+
+## Troubleshooting
+
+Report bugs and ask for support either on [Github](https://github.com/cmb69/themeswitcher_xh/issues)
+or in the [CMSimple_XH Forum](https://cmsimpleforum.com/).
+
+## License
+
+Themeswitcher_XH is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published
+by the Free Software Foundation, either version 3 of the License,
+or (at your option) any later version.
+
+Themeswitcher_XH is distributed in the hope that it will be useful,
+but without any warranty; without even the implied warranty of merchantibility
+or fitness for a particular purpose.
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Themeswitcher_XH. If not, see https://www.gnu.org/licenses/.
+
+Copyright © Christoph M. Becker
+
+Slovak translation © Dr. Martin Sereday
+
+## Credits
+
+Themeswitcher_XH is inspired by Templateshift by *olape* and *xhomie*.
+
+The plugin logo is designed by newmooon.
+Many thanks for publishing this icon under GPL.
+
+Many thanks to the community at the [CMSimple_XH forum](https://www.cmsimpleforum.com/)
+for tips, suggestions and testing.
+
+And last but not least many thanks to [Peter Harteg](https://www.harteg.dk/),
+the “father” of CMSimple, and all developers of [CMSimple_XH](https://www.cmsimple-xh.org/)
+without whom this amazing CMS would not exist.

@@ -1,185 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>Themeswitcher_XH – User Manual</title>
-<link rel="stylesheet" type="text/css" href="./stylesheet.css">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Themeswitcher_XH – User Manual</title>
+  <style type="text/css">
+    body {
+        font-family: Georgia, serif;
+        line-height: 1.5;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        background: #ffffe1;
+        max-width: 32em;
+    }
+    p {
+        text-align: justify;
+    }
+    pre {
+        color: black;
+        background: #ffe;
+        overflow: auto;
+        padding: 0.2em 0.5em;
+        border: 1px solid silver;
+    }
+  </style>
 </head>
-
 <body>
-
-<article>
-<h1>Themeswitcher_XH – User Manual</h1>
-<img src="../themeswitcher.png" style="float:left; margin: 0 1.5em 0.5em 0" alt="Stylized Themes">
-<p>
-    Themeswitcher_XH facilitates to display widgets that allow your visitors to
-    select one of the available themes (aka. templates). This is especially
-    useful for demonstration purposes, but might also be appropriate for normal
-    websites, in particular, if you're using a fancy template which might have
-    accessibility or usability issues.
-</p>
-
-<nav id="nav">
-<h2>Table of Contents</h2>
+<h1 id="themeswitcher_xh">Themeswitcher_XH</h1>
+<p>Themeswitcher_XH facilitates to display widgets that allow your visitors to select one of the available themes (aka. templates). This is especially useful for demonstration purposes, but might also be appropriate for normal websites, in particular, if you are using a fancy template which might have accessibility or usability issues.</p>
 <ul>
-<li><a href="#notice">Important Notice</a></li>
 <li><a href="#requirements">Requirements</a></li>
+<li><a href="#download">Download</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#settings">Settings</a></li>
 <li><a href="#usage">Usage</a></li>
 <li><a href="#limitations">Limitations</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
 <li><a href="#license">License</a></li>
 <li><a href="#credits">Credits</a></li>
 </ul>
-</nav>
-
-<section id="notice">
-<h2>Important Notice</h2>
-<p class="important">
-    Themeswitcher_XH hasn't be tested so far in various environments. It
-    is a so called beta version. Use with caution!
-</p>
-</section>
-
-<section id="requirements">
-<h2>Requirements</h2>
-<p>
-    Themeswitcher_XH requires CMSimple_XH ≥ 1.7.0, and PHP ≥
-    7.1.0.
-</p>
-</section>
-
-<section id="installation">
-<h2>Installation</h2>
-<p>
-    The installation is done as with many other CMSimple_XH plugins. See the <a
-    href="http://www.cmsimple-xh.org/wiki/doku.php/installation"> CMSimple_XH
-    wiki</a> for further details.
-</p>
-<ol>
-<li class="important">
-    Backup the data on your server.
-</li>
-<li>
-    Unzip the distribution on your computer.
-</li>
-<li>
-    Upload the whole directory <code>themeswitcher/</code> to your server into
-    CMSimple_XH's <code>plugins/</code> directory.
-</li>
-<li>
-    Set write permissions to the subdirectories <code>css/</code>,
-    <code>config/</code> and <code>languages/</code>.
-</li>
-<li class="important">
-    Browse to <i>Plugins</i> → <i>Themeswitcher</i> and check if all
-    requirements are fulfilled.
-</li>
+<h2 id="requirements">Requirements</h2>
+<p>Themeswitcher_XH is a plugin for <a href="https://www.cmsimple-xh.org/">CMSimple_XH</a>. It requires CMSimple_XH ≥ 1.7.0 and PHP ≥ 7.1.0.</p>
+<h2 id="download">Download</h2>
+<p>The <a href="https://github.com/cmb69/themeswitcher_xh/releases/latest">lastest release</a> is available for download on Github.</p>
+<h1 id="installation">Installation</h1>
+<p>The installation is done as with many other CMSimple_XH plugins.</p>
+<ol type="1">
+<li>Backup the data on your server.</li>
+<li>Unzip the distribution on your computer.</li>
+<li>Upload the whole directory <code>themeswitcher/</code> to your server into the <code>plugins/</code> directory of CMSimple_XH.</li>
+<li>Set write permissions for the subdirectories <code>config/</code>, <code>css/</code> and <code>languages/</code>.</li>
+<li>Navigate to <code>Plugins</code> → <code>Themeswitcher</code> in the back-end to check if all requirements are fulfilled.</li>
 </ol>
-</section>
-
-<section id="settings">
-<h2>Settings</h2>
-<p>
-    The plugin's configuration is done as with many other CMSimple_XH plugins in
-    the website's back-end. Select <i>Plugins</i> → <i>Themeswitcher</i>.
-</p>
-<p>
-    You can change the default settings of Themeswitcher_XH under <i>Config</i>.
-    Hints for the options will be displayed when hovering over the help icon
-    with your mouse.
-</p>
-<p>
-    Localization is done under <i>Language</i>. You can translate the character
-    strings to your own language if there is no appropriate language file
-    available, or customize them according to your needs.
-</p>
-<p>
-    The look of Themeswitcher_XH can be customized under <i>Stylesheet</i>.
-</p>
-</section>
-
-<section id="usage">
-<h2>Usage</h2>
-<p>
-    You can manually embed theme switcher widgets either in the template:
-</p>
-<pre>&lt;?=themeswitcher()?&gt;</pre>
-<p>
-    or on individual pages:
-</p>
-<pre>{{{themeswitcher()}}}</pre>
-<p>
-    This enables your visitors to choose their preferred theme. This choice is
-    stored in a cookie, so the selected theme stays available for the rest of
-    the browser session. You can configure whether page specific templates
-    (defined via <i>page_params</i>) override the user selection or not.
-</p>
-<p>
-    If you have many templates to choose from, and you want to make a theme
-    switcher available on all pages, you can set the respective configuration
-    option. Then the widget will be output at the bottom of the template; the
-    default style rules will position it at the bottom left of the viewport.
-</p>
-<p>
-    It is not strictly necessary to show a theme switcher widget to visitors.
-    Instead you can present them one or more links so they can choose the
-    template. Use the theme switcher widget to see how the URL of these links
-    should look like.
-</p>
-</section>
-
-<section id="limitations">
-<h2>Limitations</h2>
-<p>
-    Since CMSimple_XH 1.6 page specific templates are enabled also for subpages
-    (unless explicitly overridden). However, this is not catered to by
-    Themeswitcher_XH.
-</p>
-</section>
-
-<section id="license">
-<h2>License</h2>
-<p>
-    Themeswitcher_XH is licensed under <a
-    href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>.
-</p>
-<p>
-    Copyright © 2014-2017 Christoph M. Becker
-</p>
-<p>
-    Slovak translation © 2017 Dr. Martin Sereday
-</p>
-</section>
-
-<section id="credits">
-<h2>Credits</h2>
-<p>
-    Themeswitcher_XH is inspired by <a
-    href="http://cmsimplewiki.com/doku.php/plugins/templateshift">Templateshift</a>
-    by olape and xhomie.
-</p>
-<p>
-    The plugin logo is designed by <a
-    href="https://code.google.com/u/newmooon/">newmooon</a>. Many thanks for
-    publishing this icon under GPL.
-</p>
-<p>
-    Many thanks to the community at the <a
-    href="http://www.cmsimpleforum.com/">CMSimple_XH forum</a> for tips,
-    suggestions and testing.
-</p>
-<p>
-    And last but not least many thanks to <a href="http://harteg.dk/">Peter
-    Harteg</a>, the "father" of CMSimple, and all developers of <a
-    href="http://www.cmsimple-xh.org/">CMSimple_XH</a> without whom this amazing
-    CMS wouldn't exist.
-</p>
-</section>
-
-</article>
-
+<h2 id="settings">Settings</h2>
+<p>The configuration of the plugin is done as with many other CMSimple_XH plugins in the back-end of the Website. Go to <code>Plugins</code> → <code>Themeswitcher</code>.</p>
+<p>You can change the default settings of Themeswitcher_XH under <code>Config</code>. Hints for the options will be displayed when hovering over the help icon with your mouse.</p>
+<p>Localization is done under <code>Language</code>. You can translate the character strings to your own language if there is no appropriate language file available, or customize them according to your needs.</p>
+<p>The look of Themeswitcher_XH can be customized under <code>Stylesheet</code>.</p>
+<h2 id="usage">Usage</h2>
+<p>You can manually embed theme switcher widgets either in the template:</p>
+<pre><code>&lt;?=themeswitcher()?&gt;</code></pre>
+<p>or on individual pages:</p>
+<pre><code>{{{themeswitcher()}}}</code></pre>
+<p>This enables your visitors to choose their preferred theme. This choice is stored in a cookie, so the selected theme stays available for the rest of the browser session. You can configure whether page specific templates (defined via <code>page_params</code>) override the user selection or not.</p>
+<p>If you have many templates to choose from, and you want to make a theme switcher available on all pages, you can set the respective configuration option. Then the widget will be output at the bottom of the template; the default style rules will position it at the bottom left of the viewport.</p>
+<p>It is not strictly necessary to show a theme switcher widget to visitors. Instead you can present them one or more links so they can choose the template. Use the theme switcher widget to see how the URL of these links should look like.</p>
+<h2 id="limitations">Limitations</h2>
+<p>Since CMSimple_XH 1.6 page specific templates are enabled also for subpages (unless explicitly overridden). However, this is not catered to by Themeswitcher_XH.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>Report bugs and ask for support either on <a href="https://github.com/cmb69/themeswitcher_xh/issues">Github</a> or in the <a href="https://cmsimpleforum.com/">CMSimple_XH Forum</a>.</p>
+<h2 id="license">License</h2>
+<p>Themeswitcher_XH is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
+<p>Themeswitcher_XH is distributed in the hope that it will be useful, but without any warranty; without even the implied warranty of merchantibility or fitness for a particular purpose. See the GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License along with Themeswitcher_XH. If not, see https://www.gnu.org/licenses/.</p>
+<p>Copyright © Christoph M. Becker</p>
+<p>Slovak translation © Dr. Martin Sereday</p>
+<h2 id="credits">Credits</h2>
+<p>Themeswitcher_XH is inspired by Templateshift by <em>olape</em> and <em>xhomie</em>.</p>
+<p>The plugin logo is designed by newmooon. Many thanks for publishing this icon under GPL.</p>
+<p>Many thanks to the community at the <a href="https://www.cmsimpleforum.com/">CMSimple_XH forum</a> for tips, suggestions and testing.</p>
+<p>And last but not least many thanks to <a href="https://www.harteg.dk/">Peter Harteg</a>, the “father” of CMSimple, and all developers of <a href="https://www.cmsimple-xh.org/">CMSimple_XH</a> without whom this amazing CMS would not exist.</p>
 </body>
-
 </html>
