@@ -16,7 +16,7 @@ class SelectThemeCommandTest extends TestCase
         $sut = $this->sut();
         $this->template->expects($this->once())->method('switch')
             ->with($this->equalTo('one'));
-        $sut->execute(new FakeRequest(["url" => "http://example.com/?&themeswitcher_select=one"]), []);
+        $sut(new FakeRequest(["url" => "http://example.com/?&themeswitcher_select=one"]), []);
     }
 
     public function testSwitchesThemeOnCookie(): void
@@ -24,21 +24,21 @@ class SelectThemeCommandTest extends TestCase
         $sut = $this->sut();
         $this->template->expects($this->once())->method('switch')
             ->with($this->equalTo('one'));
-        $sut->execute(new FakeRequest(["cookie" => ["themeswitcher_theme" => "one"]]), []);
+        $sut(new FakeRequest(["cookie" => ["themeswitcher_theme" => "one"]]), []);
     }
 
     public function testTemplateIsNotSwitchedIfNotRequested(): void
     {
         $sut = $this->sut();
         $this->template->expects($this->never())->method("switch");
-        $sut->execute(new FakeRequest(), []);
+        $sut(new FakeRequest(), []);
     }
 
     public function testDontSwitchThemeIfNotAllowed(): void
     {
         $sut = $this->sut();
         $this->template->expects($this->never())->method('switch');
-        $sut->execute(new FakeRequest(), []);
+        $sut(new FakeRequest(), []);
     }
 
     public function testSwitchThemeIfPageThemeIsNotPreferred(): void
@@ -48,7 +48,7 @@ class SelectThemeCommandTest extends TestCase
         $plugin_cf['themeswitcher']['prefer_page_theme'] = '';
         $sut = $this->sut(["prefer_page_theme" => ""]);
         $this->template->expects($this->once())->method('switch');
-        $sut->execute(
+        $sut(
             new FakeRequest(["url" => "http://example.com/?&themeswitcher_select=one"]),
             ["template" => "foo"]
         );
@@ -61,13 +61,13 @@ class SelectThemeCommandTest extends TestCase
         $plugin_cf['themeswitcher']['prefer_page_theme'] = 'true';
         $sut = $this->sut();
         $this->template->expects($this->never())->method('switch');
-        $sut->execute(new FakeRequest(), ["template" => "foo"]);
+        $sut(new FakeRequest(), ["template" => "foo"]);
     }
 
     public function testCookieIsSetOnGet(): void
     {
         $sut = $this->sut();
-        $response = $sut->execute(new FakeRequest(["url" => "http://example.com/?&themeswitcher_select=one"]), []);
+        $response = $sut(new FakeRequest(["url" => "http://example.com/?&themeswitcher_select=one"]), []);
         $this->assertSame(["themeswitcher_theme", "one", 0], $response->cookie());
     }
 

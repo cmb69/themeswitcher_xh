@@ -41,7 +41,7 @@ class SelectThemeCommand
     }
 
     /** @param array<string,string> $pageData */
-    public function execute(Request $request, array $pageData): Response
+    public function __invoke(Request $request, array $pageData): Response
     {
         $selectedTemplate = $request->get("themeswitcher_select") ?? $request->cookie("themeswitcher_theme");
         if ($selectedTemplate === null) {
