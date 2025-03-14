@@ -19,8 +19,12 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- use Plib\Response;
- use Themeswitcher\Dic;
+use Themeswitcher\Dic;
+
+if (!defined("CMSIMPLE_XH_VERSION")) {
+    http_response_code(403);
+    exit;
+}
 
 /**
  * @var string $admin

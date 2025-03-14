@@ -32,6 +32,11 @@ function themeswitcher()
     return Dic::makeThemeSelectionCommand()(Request::current())();
 }
 
+if (!defined("CMSIMPLE_XH_VERSION")) {
+    http_response_code(403);
+    exit;
+}
+
 /** @var array<string,string> $pd_current */
 
 Dic::makeSelectThemeCommand()->execute(Request::current(), $pd_current);
