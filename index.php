@@ -26,10 +26,7 @@ use Themeswitcher\Dic;
 
 const THEMESWITCHER_VERSION = "1.0beta4";
 
-/**
- * @return string
- */
-function themeswitcher()
+function themeswitcher(): string
 {
     return Dic::makeThemeSelectionCommand()(Request::current())();
 }
