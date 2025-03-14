@@ -34,10 +34,8 @@ class ThemeSelectionCommandTest extends TestCase
 
     public function testRendersNothingInFrontEndModeIfInEditMode(): void
     {
-        global $edit;
-        $edit = true;
         $sut = $this->sut(["display_automatic" => "frontend"]);
-        $response = $sut(new FakeRequest(), true);
+        $response = $sut(new FakeRequest(["edit" => true]), true);
         $this->assertEquals("", $response->output());
         $this->assertNull($response->bjs());
     }

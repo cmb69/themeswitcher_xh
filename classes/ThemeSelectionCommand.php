@@ -50,7 +50,7 @@ class ThemeSelectionCommand
         if (!$automatic) {
             return Response::create($this->render($request, $automatic));
         }
-        if ($this->isAutomatic()) {
+        if ($this->isAutomatic($request)) {
             return Response::create()->withBjs($this->render($request, $automatic));
         }
         return Response::create();
@@ -65,11 +65,10 @@ class ThemeSelectionCommand
         ]);
     }
 
-    private function isAutomatic(): bool
+    private function isAutomatic(Request $request): bool
     {
-        global $edit;
         $mode = $this->conf['display_automatic'];
-        return ($mode == 'always' || $mode == 'frontend' && !$edit);
+        return ($mode === 'always' || ($mode === 'frontend' && !$request->edit()));
     }
 
     /** @return list<array{name:string,selected:string}> */
