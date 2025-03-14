@@ -39,7 +39,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {
     exit;
 }
 
-/** @var array<string,string> $pd_current */
+/** @var ?array<string,string> $pd_current */
 
-Dic::makeSelectThemeCommand()->execute(Request::current(), $pd_current);
+Dic::makeSelectThemeCommand()->execute(Request::current(), $pd_current ?? []);
 Dic::makeThemeSelectionCommand()(Request::current(), true)();
