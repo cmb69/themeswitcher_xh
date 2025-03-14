@@ -7,7 +7,7 @@ use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
 
-class TemplatesTest extends TestCase
+class TemplateTest extends TestCase
 {
     /** @var Template */
     private $subject;
