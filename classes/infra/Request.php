@@ -41,11 +41,4 @@ class Request
     {
         return $_GET["themeswitcher_select"] ?? $_COOKIE["themeswitcher_theme"] ?? null;
     }
-
-    /** @codeCoverageIgnore */
-    public function hasPageTemplate(): bool
-    {
-        global $pd_current;
-        return !empty($pd_current["template"]);
-    }
 }

@@ -16,7 +16,7 @@ class SelectThemeCommandTest extends TestCase
         $sut = $this->sut();
         $this->templates->expects($this->once())->method('switch')
             ->with($this->equalTo('one'));
-        $sut->execute($this->request());
+        $sut->execute($this->request(), []);
     }
 
     public function testSwitchesThemeOnCookie(): void
@@ -24,21 +24,21 @@ class SelectThemeCommandTest extends TestCase
         $sut = $this->sut();
         $this->templates->expects($this->once())->method('switch')
             ->with($this->equalTo('one'));
-        $sut->execute($this->request());
+        $sut->execute($this->request(), []);
     }
 
     public function testTemplateIsNotSwitchedIfNotRequested(): void
     {
         $sut = $this->sut();
         $this->templates->expects($this->never())->method("switch");
-        $sut->execute($this->request(["selectedTemplate" => null]));
+        $sut->execute($this->request(["selectedTemplate" => null]), []);
     }
 
     public function testDontSwitchThemeIfNotAllowed(): void
     {
         $sut = $this->sut();
         $this->templates->expects($this->never())->method('switch');
-        $sut->execute($this->request(["selectedTemplate" => "foo"]));
+        $sut->execute($this->request(["selectedTemplate" => "foo"]), []);
     }
 
     public function testSwitchThemeIfPageThemeIsNotPreferred(): void
@@ -49,7 +49,7 @@ class SelectThemeCommandTest extends TestCase
         $sut = $this->sut(["prefer_page_theme" => ""]);
         $this->templates->expects($this->once())->method('switch');
 
-        $sut->execute($this->request(["hasPageTemplate" => true]));
+        $sut->execute($this->request(), ["template" => "foo"]);
     }
 
     public function testDontSwitchThemeIfPageTemplateIsPreferred(): void
@@ -59,13 +59,13 @@ class SelectThemeCommandTest extends TestCase
         $plugin_cf['themeswitcher']['prefer_page_theme'] = 'true';
         $sut = $this->sut();
         $this->templates->expects($this->never())->method('switch');
-        $sut->execute($this->request(["hasPageTemplate" => true]));
+        $sut->execute($this->request(), ["template" => "foo"]);
     }
 
     public function testCookieIsSetOnGet(): void
     {
         $sut = $this->sut();
-        $response = $sut->execute($this->request());
+        $response = $sut->execute($this->request(), []);
         $this->assertSame(["themeswitcher_theme", "one", 0], $response->cookie());
     }
 
@@ -88,11 +88,9 @@ class SelectThemeCommandTest extends TestCase
     {
         $opts += [
             "selectedTemplate" => "one",
-            "hasPageTemplate" => false,
         ];
         $request = $this->createMock(Request::class);
         $request->method("selectedTemplate")->willReturn($opts["selectedTemplate"]);
-        $request->method("hasPageTemplate")->willReturn($opts["hasPageTemplate"]);
         return $request;
     }
 }

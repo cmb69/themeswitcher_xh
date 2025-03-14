@@ -41,7 +41,8 @@ class SelectThemeCommand
         $this->templates = $templates;
     }
 
-    public function execute(Request $request): Response
+    /** @param array<string,string> $pageData */
+    public function execute(Request $request, array $pageData): Response
     {
         if ($request->selectedTemplate() === null) {
             return Response::create();
@@ -49,7 +50,7 @@ class SelectThemeCommand
         if (!$this->isUserThemeAllowed($request)) {
             return Response::create();
         }
-        if ($request->hasPageTemplate() && $this->conf['prefer_page_theme']) {
+        if (!empty($pageData["template"]) && $this->conf['prefer_page_theme']) {
             return Response::create();
         }
         $this->templates->switch($request->selectedTemplate());

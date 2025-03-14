@@ -19,8 +19,7 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- use Plib\Response;
- use Themeswitcher\Dic;
+use Themeswitcher\Dic;
 use Themeswitcher\Infra\Request;
 
 const THEMESWITCHER_VERSION = "1.0beta4";
@@ -33,5 +32,7 @@ function themeswitcher()
     return Dic::makeThemeSelectionCommand()(Request::current())();
 }
 
-Dic::makeSelectThemeCommand()->execute(Request::current());
+/** @var array<string,string> $pd_current */
+
+Dic::makeSelectThemeCommand()->execute(Request::current(), $pd_current);
 Dic::makeThemeSelectionCommand()(Request::current(), true)();
