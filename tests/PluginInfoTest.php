@@ -4,8 +4,8 @@ namespace Themeswitcher;
 
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
+use Plib\View;
 use Themeswitcher\Infra\SystemChecker;
-use Themeswitcher\Infra\View;
 
 class PluginInfoTest extends TestCase
 {

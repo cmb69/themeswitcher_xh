@@ -8,6 +8,8 @@ require_once './vendor/autoload.php';
 require_once '../../cmsimple/functions.php';
 require_once '../../cmsimple/adminfuncs.php';
 
+require_once '../plib/classes/View.php';
+
 spl_autoload_register(function (string $className) {
     $parts = explode("\\", $className);
     if ($parts[0] !== "Themeswitcher") {

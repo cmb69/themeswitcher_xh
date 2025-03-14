@@ -1,6 +1,6 @@
 <?php
 
-use Themeswitcher\Infra\View;
+use Plib\View;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 
@@ -11,10 +11,10 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
  */
 ?>
 <!-- themeswitcher info -->
-<h1>Themeswitcher <?=$version?></h1>
+<h1>Themeswitcher <?=$this->esc($version)?></h1>
 <div>
   <h2><?=$this->text('syscheck_title')?></h2>
 <?foreach ($checks as $check):?>
-  <p class="<?=$check['class']?>"><?=$this->text($check['key'], $check['arg'])?><?=$this->text($check['statekey'])?></p>
+  <p class="<?=$this->esc($check['class'])?>"><?=$this->text($check['key'], $check['arg'])?><?=$this->text($check['statekey'])?></p>
 <?endforeach?>
 </div>

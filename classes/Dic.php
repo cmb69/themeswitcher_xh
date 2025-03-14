@@ -21,9 +21,9 @@
 
 namespace Themeswitcher;
 
+use Plib\View;
 use Themeswitcher\Infra\SystemChecker;
 use Themeswitcher\Infra\Templates;
-use Themeswitcher\Infra\View;
 
 class Dic
 {

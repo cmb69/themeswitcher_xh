@@ -21,9 +21,9 @@
 
 namespace Themeswitcher;
 
+use Plib\View;
 use Themeswitcher\Infra\Request;
 use Themeswitcher\Infra\Templates;
-use Themeswitcher\Infra\View;
 use Themeswitcher\Logic\Util;
 use Themeswitcher\Value\Response;
 
