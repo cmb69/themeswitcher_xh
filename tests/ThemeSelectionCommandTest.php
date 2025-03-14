@@ -51,7 +51,7 @@ class ThemeSelectionCommandTest extends TestCase
             "site_template" => "foo_theme",
         ]];
         $templates = $this->createMock(Template::class);
-        $templates->method("findAll")->willReturn(["foo_theme", "bar_template"]);
+        $templates->method("findAllowed")->willReturn(["foo_theme", "bar_template"]);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["themeswitcher"]);
         return new ThemeSelectionCommand($plugin_cf["themeswitcher"], $templates, $view);
     }

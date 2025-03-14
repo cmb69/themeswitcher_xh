@@ -37,12 +37,19 @@ class TemplatesTest extends TestCase
         $this->subject = new Template();
     }
 
-    /**
-     * @return void
-     */
-    public function testAllTemplates()
+    /** @dataProvider allowedTemplates */
+    public function testFindsAllowedTemplates(string $allowed, array $expected): void
     {
-        $this->assertEquals(['one', 'three', 'two'], $this->subject->findAll());
+        $this->assertSame($expected, $this->subject->findAllowed($allowed));
+    }
+
+    public function allowedTemplates(): array
+    {
+        return [
+            ["four", []],
+            ["t*", ["three", "two"]],
+            ["*", ["one", "three", "two"]],
+        ];
     }
 
     /**

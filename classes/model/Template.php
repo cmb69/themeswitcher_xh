@@ -24,11 +24,45 @@ namespace Themeswitcher\Model;
 class Template
 {
     /** @return list<string> */
-    public function findAll(): array
+    public function findAllowed(string $allowedThemes): array
+    {
+        return $this->allowedThemes($this->findAll(), $allowedThemes);
+    }
+
+    /** @return list<string> */
+    private function findAll(): array
     {
         $templates = XH_templates();
         natcasesort($templates);
         return array_values($templates);
+    }
+
+    /**
+     * @param list<string> $allThemes
+     * @return list<string>
+     */
+    private function allowedThemes(array $allThemes, string $allowedThemes): array
+    {
+        return array_values(array_filter($allThemes, function (string $theme) use ($allowedThemes) {
+            return $this->isThemeAllowed($theme, $allowedThemes);
+        }));
+    }
+
+    private function isThemeAllowed(string $theme, string $allowedThemes): bool
+    {
+        $allowedThemes = array_map("trim", explode(",", $allowedThemes));
+        foreach ($allowedThemes as $allowedTheme) {
+            if ($this->fnmatch($allowedTheme, $theme)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function fnmatch(string $pattern, string $string): bool
+    {
+        $pattern = strtr(preg_quote($pattern, "/"), ["\*" => ".*", "\?" => "."]);
+        return (bool) preg_match("/^{$pattern}$/", $string);
     }
 
     /** @return void */

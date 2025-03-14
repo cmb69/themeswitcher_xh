@@ -81,8 +81,8 @@ class SelectThemeCommandTest extends TestCase
             "prefer_page_theme" => $opts["prefer_page_theme"],
         ];
         $this->template = $this->createMock(Template::class);
-        $this->template->expects($this->any())->method('findAll')
-            ->will($this->returnValue(array('one', 'three', 'two')));
+        $this->template->expects($this->any())->method('findAllowed')
+            ->will($this->returnValue(array('one')));
         return new SelectThemeCommand($conf, $this->template);
     }
 }

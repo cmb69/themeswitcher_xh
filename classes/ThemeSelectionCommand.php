@@ -25,7 +25,6 @@ use Plib\Request;
 use Plib\Response;
 use Plib\View;
 use Themeswitcher\Model\Template;
-use Themeswitcher\Logic\Util;
 
 class ThemeSelectionCommand
 {
@@ -33,16 +32,16 @@ class ThemeSelectionCommand
     private $conf;
 
     /** @var Template */
-    private $templates;
+    private $template;
 
     /** @var View */
     private $view;
 
     /** @param array<string,string> $conf */
-    public function __construct(array $conf, Template $templates, View $view)
+    public function __construct(array $conf, Template $template, View $view)
     {
         $this->conf = $conf;
-        $this->templates = $templates;
+        $this->template = $template;
         $this->view = $view;
     }
 
@@ -76,7 +75,7 @@ class ThemeSelectionCommand
     /** @return list<array{name:string,selected:string}> */
     private function templateRecords(Request $request): array
     {
-        $allowedTemplates = Util::allowedThemes($this->templates->findAll(), $this->conf['allowed_themes']);
+        $allowedTemplates = $this->template->findAllowed($this->conf['allowed_themes']);
         $themes = [];
         foreach ($allowedTemplates as $name) {
             $themes[] = [
