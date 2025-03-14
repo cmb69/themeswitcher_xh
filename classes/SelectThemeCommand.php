@@ -23,7 +23,7 @@ namespace Themeswitcher;
 
 use Plib\Request;
 use Plib\Response;
-use Themeswitcher\Infra\Templates;
+use Themeswitcher\Model\Template;
 use Themeswitcher\Logic\Util;
 
 class SelectThemeCommand
@@ -31,11 +31,11 @@ class SelectThemeCommand
     /** @var array<string,string> */
     private $conf;
 
-    /** @var Templates */
+    /** @var Template */
     private $templates;
 
     /** @param array<string,string> $conf */
-    public function __construct(array $conf, Templates $templates)
+    public function __construct(array $conf, Template $templates)
     {
         $this->conf = $conf;
         $this->templates = $templates;

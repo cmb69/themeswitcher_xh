@@ -23,7 +23,7 @@ namespace Themeswitcher;
 
 use Plib\SystemChecker;
 use Plib\View;
-use Themeswitcher\Infra\Templates;
+use Themeswitcher\Model\Template;
 
 class Dic
 {
@@ -32,7 +32,7 @@ class Dic
         global $cf, $plugin_cf;
         return new ThemeSelectionCommand(
             ["site_template" => $cf["site"]["template"]] + $plugin_cf["themeswitcher"],
-            new Templates(),
+            new Template(),
             self::makeView()
         );
     }
@@ -42,7 +42,7 @@ class Dic
         global $plugin_cf;
         return new SelectThemeCommand(
             $plugin_cf["themeswitcher"],
-            new Templates()
+            new Template()
         );
     }
 

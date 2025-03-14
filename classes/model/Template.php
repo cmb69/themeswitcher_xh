@@ -19,9 +19,9 @@
  * along with Themeswitcher_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Themeswitcher\Infra;
+namespace Themeswitcher\Model;
 
-class Templates
+class Template
 {
     /** @return list<string> */
     public function findAll(): array

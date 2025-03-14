@@ -1,6 +1,6 @@
 <?php
 
-namespace Themeswitcher\Infra;
+namespace Themeswitcher\Model;
 
 use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStreamWrapper;
@@ -34,7 +34,7 @@ class TemplatesTest extends TestCase
         $plugin_cf = array(
             'themeswitcher' => ['allowed_themes' => '*']
         );
-        $this->subject = new Templates();
+        $this->subject = new Template();
     }
 
     /**
