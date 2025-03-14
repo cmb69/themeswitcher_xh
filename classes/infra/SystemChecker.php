@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (C) 2023 Christoph M. Becker
+ * Copyright (c) Christoph M. Becker
  *
  * This file is part of Themeswitcher_XH.
  *
