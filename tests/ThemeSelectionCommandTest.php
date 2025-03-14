@@ -40,7 +40,7 @@ class ThemeSelectionCommandTest extends TestCase
         $this->assertNull($response->bjs());
     }
 
-    private function sut(array $opts = [])
+    private function sut(array $opts = []): ThemeSelectionCommand
     {
         $opts += ["display_automatic" => "always"];
         $plugin_cf = ["themeswitcher" => [

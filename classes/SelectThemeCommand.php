@@ -57,10 +57,7 @@ class SelectThemeCommand
         return Response::create()->withCookie("themeswitcher_theme", $selectedTemplate, 0);
     }
 
-    /**
-     * @return bool
-     */
-    private function isUserThemeAllowed(Request $request)
+    private function isUserThemeAllowed(Request $request): bool
     {
         $selectedTemplate = $request->get("themeswitcher_select") ?? $request->cookie("themeswitcher_theme");
         $allowedTemplates = $this->template->findAllowed($this->conf['allowed_themes']);

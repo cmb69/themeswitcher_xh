@@ -71,7 +71,7 @@ class SelectThemeCommandTest extends TestCase
         $this->assertSame(["themeswitcher_theme", "one", 0], $response->cookie());
     }
 
-    private function sut(array $opts = [])
+    private function sut(array $opts = []): SelectThemeCommand
     {
         $opts += [
             "prefer_page_theme" => "true",

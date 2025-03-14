@@ -9,14 +9,10 @@ use org\bovigo\vfs\vfsStream;
 
 class TemplatesTest extends TestCase
 {
-    /**
-     * @var Templates
-     */
+    /** @var Template */
     private $subject;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $themeFolder;
 
     public function setUp(): void
@@ -52,10 +48,7 @@ class TemplatesTest extends TestCase
         ];
     }
 
-    /**
-     * @return void
-     */
-    public function testSwitchesTemplate()
+    public function testSwitchesTemplate(): void
     {
         global $pth;
 
