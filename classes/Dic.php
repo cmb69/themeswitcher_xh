@@ -49,7 +49,7 @@ class Dic
     public static function makePluginInfo(): PluginInfo
     {
         global $pth;
-        return new PluginInfo($pth["folder"]["plugins"] . "themeswitcher/", new SystemChecker, self::makeView());
+        return new PluginInfo($pth["folder"]["plugins"] . "themeswitcher/", new SystemChecker(), self::makeView());
     }
 
     private static function makeView(): View
