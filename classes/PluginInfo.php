@@ -55,7 +55,7 @@ class PluginInfo
                 $this->checkWritability($this->pluginFolder . "css/"),
                 $this->checkWritability($this->pluginFolder . "languages/"),
             ]
-        ]))->withTitle($this->view->esc("Themeswitcher 1.0beta4"));
+        ]))->withTitle($this->view->esc("Themeswitcher 1.0"));
     }
 
     /** @return array{class:string,key:string,arg:string,statekey:string} */

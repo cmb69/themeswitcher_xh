@@ -24,7 +24,7 @@
 use Plib\Request;
 use Themeswitcher\Dic;
 
-const THEMESWITCHER_VERSION = "1.0beta4";
+const THEMESWITCHER_VERSION = "1.0";
 
 function themeswitcher(): string
 {
